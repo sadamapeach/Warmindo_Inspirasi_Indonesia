@@ -2,14 +2,22 @@ package com.android.warmindoinspirasiindonesia
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 
 import android.database.sqlite.SQLiteOpenHelper
+import android.graphics.Bitmap
+import android.os.Environment
+import android.provider.MediaStore
 import android.widget.Toast
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE_NAME,null,DATABASE_VERSION) {
     companion object {
-        private val DATABASE_VERSION = 3
+        private val DATABASE_VERSION = 1
         private val DATABASE_NAME = "Warmindo"
 
         // users
@@ -34,7 +42,13 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         private val KEY_PENGGUNA_STATUS = "status"
         private val KEY_PENGGUNA_FOTO = "foto"
 
-
+        // aktivitas pengguna
+        private val TABLE_AKTVPENGGUNA = "AktivitasPengguna"
+        private val KEY_AKTVPENGGUNA_IDAKTIVITAS = "idAktivitas"
+        private val KEY_AKTVPENGGUNA_TANGGAL = "tanggal"
+        private val KEY_AKTVPENGGUNA_WAKTU = "waktu"
+        private val KEY_AKTVPENGGUNA_IDPENGGUNA = "idPengguna"
+        private val KEY_AKTVPENGGUNA_AKTIVITAS = "aktivitas"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -61,12 +75,21 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
                 KEY_PENGGUNA_PASSWORD + " TEXT, " +
                 KEY_PENGGUNA_NAMA + " TEXT, " +
                 KEY_PENGGUNA_STATUS + " TEXT, " +
-                KEY_PENGGUNA_FOTO + " TEXT, " +
-                KEY_PENGGUNA_IDROLE + " INTEGER, " +
-                "FOREIGN KEY(" + KEY_PENGGUNA_IDROLE + ") REFERENCES " + TABLE_ROLE + "(" + KEY_ROLE_IDROLE + ")," +
-                KEY_ROLE_STATUS + " TEXT" + ")")
+                KEY_PENGGUNA_FOTO + " BLOB, " +
+                KEY_PENGGUNA_IDROLE + " INTEGER" + ")")
 
         db.execSQL(queryPengguna)
+//
+//        // aktivitas pengguna
+//        val queryAktvPengguna = ("CREATE TABLE " + TABLE_AKTVPENGGUNA + " ("
+//                + KEY_AKTVPENGGUNA_IDAKTIVITAS + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                KEY_AKTVPENGGUNA_TANGGAL + " TEXT, " +
+//                KEY_AKTVPENGGUNA_WAKTU + " TEXT, " +
+//                KEY_AKTVPENGGUNA_IDPENGGUNA + " INTEGER, " +
+//                KEY_AKTVPENGGUNA_AKTIVITAS + " TEXT, " +
+//                "FOREIGN KEY(" + KEY_AKTVPENGGUNA_IDPENGGUNA + ") REFERENCES " + TABLE_PENGGUNA + "(" + KEY_PENGGUNA_IDPENGGUNA + ")")
+//
+//        db.execSQL(queryAktvPengguna)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, p1: Int, p2: Int) {
@@ -75,21 +98,23 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ROLE)
 
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PENGGUNA)
+
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_AKTVPENGGUNA)
         onCreate(db)
     }
 
     fun addUser(username : String, password : String ){
         val values = ContentValues()
 
-        values.put(KEY_USERS_USERNAME, username)
-        values.put(KEY_USERS_PASSWORD, password)
+        values.put(KEY_PENGGUNA_USERNAME, username)
+        values.put(KEY_PENGGUNA_PASSWORD, password)
 
         val db = this.writableDatabase
 
         db.beginTransaction()
 
         try {
-            val result = db.insert(TABLE_USERS, null, values)
+            val result = db.insert(TABLE_PENGGUNA, null, values)
 
             if (result != -1L) {
                 db.setTransactionSuccessful() // Commit transaksi jika berhasil
@@ -107,7 +132,7 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
 
     fun checkUsername(username: String): Boolean {
         val db = this.readableDatabase
-        val query = "SELECT * FROM $TABLE_USERS WHERE $KEY_USERS_USERNAME = ?"
+        val query = "SELECT * FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_USERNAME = ?"
         val cursor = db.rawQuery(query, arrayOf(username))
 
         val usernameExists = cursor.count > 0
@@ -120,7 +145,7 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
 
     fun checkCredential(username: String, password: String): Boolean {
         val db = this.readableDatabase
-        val query = "SELECT * FROM $TABLE_USERS WHERE $KEY_USERS_USERNAME = ? AND $KEY_USERS_PASSWORD = ?"
+        val query = "SELECT * FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_USERNAME = ? AND $KEY_PENGGUNA_PASSWORD = ?"
         val cursor = db.rawQuery(query, arrayOf(username, password))
 
         val userExists = cursor.count > 0
@@ -150,35 +175,122 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         db.close()
     }
 
-    fun addPengguna(username : String, password : String, nama : String, idRole : Int, status : String, foto : String){
+    fun addAktivitasPengguna(tanggal: String, waktu: String, idPengguna: Int, aktivitas: String) {
+        val values = ContentValues()
+
+        values.put(KEY_AKTVPENGGUNA_TANGGAL, tanggal)
+        values.put(KEY_AKTVPENGGUNA_WAKTU, waktu)
+        values.put(KEY_AKTVPENGGUNA_IDPENGGUNA, idPengguna)
+        values.put(KEY_AKTVPENGGUNA_AKTIVITAS, aktivitas)
+
+        val db = this.writableDatabase
+
+        val result = db.insert(TABLE_AKTVPENGGUNA, null, values)
+
+        if (result != -1L) {
+            db.setTransactionSuccessful()
+            Toast.makeText(context, "Berhasil menambah aktivitas pengguna", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Gagal menambah aktivitas pengguna", Toast.LENGTH_SHORT).show()
+        }
+
+        db.close()
+    }
+
+//    private fun saveImageToStorage(bitmap: Bitmap, context: Context): String {
+//        val imageFileName = "JPEG_${System.currentTimeMillis()}_"
+//        val resolver = context.contentResolver
+//        val contentValues = ContentValues().apply {
+//            put(MediaStore.Images.Media.DISPLAY_NAME, imageFileName)
+//            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//                put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+//            }
+//        }
+//
+//        val imageUri: Uri? = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+//
+//        try {
+//            imageUri?.let {
+//                resolver.openOutputStream(it)?.use { outputStream ->
+//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+//                }
+//            }
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//        }
+//
+//        return imageUri?.toString() ?: ""
+//    }
+
+    fun addPengguna(username: String, password: String, nama: String, idRole: Int, status: String, foto: Bitmap) {
+        val objectByteOutputStream = ByteArrayOutputStream()
+        foto.compress(Bitmap.CompressFormat.JPEG, 100, objectByteOutputStream)
+        val imageInBytes = objectByteOutputStream.toByteArray()
+
         val values = ContentValues()
 
         values.put(KEY_PENGGUNA_USERNAME, username)
         values.put(KEY_PENGGUNA_PASSWORD, password)
         values.put(KEY_PENGGUNA_NAMA, nama)
         values.put(KEY_PENGGUNA_IDROLE, idRole)
-        values.put(KEY_PENGGUNA_FOTO, foto)
+        values.put(KEY_PENGGUNA_FOTO, imageInBytes)
         values.put(KEY_PENGGUNA_STATUS, status)
 
         val db = this.writableDatabase
+        val result = db.insert(TABLE_PENGGUNA, null, values)
 
-        db.beginTransaction()
-
-        try {
-            val result = db.insert(TABLE_PENGGUNA, null, values)
-
-            if (result != -1L) {
-                db.setTransactionSuccessful() // Commit transaksi jika berhasil
-                Toast.makeText(context, "Registrasi berhasil", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(context, "Registrasi gagal", Toast.LENGTH_SHORT).show()
-            }
-        } catch (e: Exception) {
-            // Tangani kesalahan jika ada
-        } finally {
-            db.endTransaction()
-            db.close()
+        if (result != -1L) {
+            Toast.makeText(context, "Berhasil menambah pengguna", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Gagal menambah pengguna", Toast.LENGTH_SHORT).show()
         }
+
+        db.close()
     }
+
+
+    fun getAllRoles(): List<Roles> {
+        val roleList = mutableListOf<Roles>()
+
+        val db = this.readableDatabase
+        val query = "SELECT * FROM $TABLE_ROLE"
+        val cursor = db.rawQuery(query, null)
+
+        cursor.use {
+            while (it.moveToNext()) {
+                val roleId = it.getInt(it.getColumnIndex(KEY_ROLE_IDROLE))
+                val roleName = it.getString(it.getColumnIndex(KEY_ROLE_ROLE))
+                val roleStatus = it.getString(it.getColumnIndex(KEY_ROLE_STATUS))
+
+                val role = Roles(roleId, roleName, roleStatus)
+                roleList.add(role)
+            }
+        }
+        return roleList
+    }
+
+    fun getAllPengguna(): Cursor {
+        val query = "SELECT ${TABLE_PENGGUNA}.*, ${TABLE_ROLE}.role FROM ${TABLE_PENGGUNA} INNER JOIN ${TABLE_ROLE} ON ${TABLE_PENGGUNA}.idRole = ${TABLE_ROLE}.idRole"
+        val db = this.readableDatabase
+        return db.rawQuery(query, null)
+    }
+
+    fun getImageDataFromDatabase(userId: String): ByteArray? {
+        val db = this.readableDatabase
+        var imageData: ByteArray? = null
+
+        val query = "SELECT foto FROM $TABLE_PENGGUNA WHERE idPengguna = ?"
+        val cursor = db.rawQuery(query, arrayOf(userId))
+
+        cursor?.use {
+            if (it.moveToFirst()) {
+                imageData = it.getBlob(it.getColumnIndex("foto"))
+            }
+        }
+
+        return imageData
+    }
+
 
 }

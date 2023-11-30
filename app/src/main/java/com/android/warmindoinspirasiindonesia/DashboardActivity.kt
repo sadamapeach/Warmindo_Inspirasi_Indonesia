@@ -20,6 +20,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener {
         btnRole = findViewById(R.id.btn_role)
 
         btnRole.setOnClickListener(this)
+        btnPengguna.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
@@ -27,6 +28,9 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener {
             if (view.id == R.id.btn_role) {
                 val crudRoleIntent = Intent(this, CRUDRoleActivity::class.java)
                 startActivity(crudRoleIntent)
+            } else if (view.id == R.id.btn_pengguna) {
+                val crudPenggunaIntent = Intent(this, CRUDPenggunaActivity::class.java)
+                startActivity(crudPenggunaIntent)
             }
         }
     }

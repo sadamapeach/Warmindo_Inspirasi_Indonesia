@@ -26,7 +26,6 @@ class AddRoleActivity : AppCompatActivity(), View.OnClickListener {
         spinnerStatus = findViewById(R.id.spinner_status)
         btnSave = findViewById(R.id.btn_save)
 
-        // Setup spinner with ArrayAdapter
         val statusOptions = arrayOf("Aktif", "Tidak Aktif")
         val statusAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, statusOptions)
         spinnerStatus.adapter = statusAdapter
