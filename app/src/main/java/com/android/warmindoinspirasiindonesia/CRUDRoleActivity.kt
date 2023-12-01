@@ -55,7 +55,7 @@ class CRUDRoleActivity: AppCompatActivity(), View.OnClickListener {
 
     private fun storeDataInArrays() {
         val db = DBHelper(this)
-        val cursor: Cursor = db.getAllRoles()
+        val cursor: Cursor = db.getAllRoles2()
 
         if (cursor.count == 0) {
             Toast.makeText(this, "No data.", Toast.LENGTH_SHORT).show()
