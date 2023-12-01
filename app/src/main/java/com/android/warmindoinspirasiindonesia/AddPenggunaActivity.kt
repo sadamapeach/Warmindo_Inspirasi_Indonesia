@@ -111,10 +111,7 @@ class AddPenggunaActivity : AppCompatActivity(), View.OnClickListener {
                         thumbnail ?: BitmapFactory.decodeResource(resources, defaultImageResource)
 
                     db.addPengguna(username, password, nama, role, status, safeThumbnail)
-
-                    etUsername.text.clear()
-                    etPassword.text.clear()
-                    etNama.text.clear()
+                    finish()
                 } else {
                     Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
                 }

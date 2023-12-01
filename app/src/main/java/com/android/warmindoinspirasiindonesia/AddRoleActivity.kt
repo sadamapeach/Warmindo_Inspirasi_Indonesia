@@ -44,6 +44,7 @@ class AddRoleActivity : AppCompatActivity(), View.OnClickListener {
 
                 if (idRole != null && role.isNotEmpty() && status.isNotEmpty()) {
                     db.addRole(idRole, role, status)
+                    finish()
                 } else {
                     Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
                 }

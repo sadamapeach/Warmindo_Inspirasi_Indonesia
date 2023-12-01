@@ -1,5 +1,6 @@
 package com.android.warmindoinspirasiindonesia
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -15,6 +16,7 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import java.io.IOException
 
 class UpdatePenggunaActivity : AppCompatActivity(), View.OnClickListener {
@@ -52,6 +54,11 @@ class UpdatePenggunaActivity : AppCompatActivity(), View.OnClickListener {
 
         getAndSetIntentData()
         setupSpinner()
+
+        val ab = supportActionBar
+        if (ab != null) {
+            ab.setTitle("Edit Pengguna")
+        }
     }
     private fun setupSpinner() {
         val roles = DBHelper.getAllRoles()
@@ -99,15 +106,13 @@ class UpdatePenggunaActivity : AppCompatActivity(), View.OnClickListener {
                     thumbnail ?: BitmapFactory.decodeResource(resources, defaultImageResource)
                 //val updatedFoto: ByteArray? = // Ambil data foto yang baru dari antarmuka, misalnya dengan metode getImageData()
 
-                val success = DBHelper.updatePengguna(userId, updatedName, updatedStatus, idRole, safeThumbnail)
-
-                if (success) {
-                    Toast.makeText(this, "Pengguna berhasil diperbarui", Toast.LENGTH_SHORT).show()
-                    // Tambahkan tindakan sesuai kebutuhan, misalnya kembali ke aktivitas sebelumnya
-                    finish()
-                } else {
-                    Toast.makeText(this, "Gagal memperbarui pengguna", Toast.LENGTH_SHORT).show()
-                }
+                DBHelper.updatePengguna(userId, updatedName, updatedStatus, idRole, safeThumbnail)
+                finish()
+//                if (success) {
+//                    Toast.makeText(this, "Pengguna berhasil diperbarui", Toast.LENGTH_SHORT).show()
+//                } else {
+//                    Toast.makeText(this, "Gagal memperbarui pengguna", Toast.LENGTH_SHORT).show()
+//                }
             }
         }
     }
