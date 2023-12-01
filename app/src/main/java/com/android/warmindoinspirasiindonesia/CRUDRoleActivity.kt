@@ -1,6 +1,6 @@
 package com.android.warmindoinspirasiindonesia
 
-import RoleListAdapter
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,16 +9,17 @@ import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class CRUDRoleActivity<Role> : AppCompatActivity(), View.OnClickListener {
+class CRUDRoleActivity: AppCompatActivity(), View.OnClickListener {
 
     private lateinit var btnAdd: Button
     private lateinit var recyclerViewRoles: RecyclerView
     private lateinit var roleListAdapter: RoleListAdapter
 
-    private fun getRolesFromDatabase(): List<com.android.warmindoinspirasiindonesia.Role> {
+    private fun getRolesFromDatabase(): List<com.android.warmindoinspirasiindonesia.Roles> {
         val dbHelper = DBHelper(this)
         return dbHelper.getAllRoles()
     }
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crudrole)
