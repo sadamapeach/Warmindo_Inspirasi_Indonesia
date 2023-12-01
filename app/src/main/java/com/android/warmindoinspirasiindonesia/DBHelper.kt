@@ -367,4 +367,8 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         return result != -1
     }
 
+    fun deleteRole(idRole: Int) {
+        // logic delete role
+    }
+
 }
