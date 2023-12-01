@@ -3,7 +3,23 @@
     <style name="Base.Theme.WarmindoInspirasiIndonesia" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="color">@color/coklat</item>
+        <item name="colorPrimary">@color/kuning</item>
+        <item name="colorOnSecondary">@color/abu</item>
     </style>
 
     <style name="Theme.WarmindoInspirasiIndonesia" parent="Base.Theme.WarmindoInspirasiIndonesia" />
+
+    <style name="Text_Button">
+        <item name="fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/coklat</item>
+    </style>
+    <style name="Button_Color">
+        <item name="android:textColor">@color/kuning</item>
+    </style>
+    <style name="Text_Login">
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">15sp</item>
+    </style>
 </resources>

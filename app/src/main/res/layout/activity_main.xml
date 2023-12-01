@@ -3,32 +3,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btn_login"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="138dp"
-        android:layout_marginTop="314dp"
-        android:layout_marginEnd="128dp"
-        android:text="Login" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp">
 
-    <Button
-        android:id="@+id/btn_regis"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_login"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="136dp"
-        android:layout_marginTop="22dp"
-        android:layout_marginEnd="123dp"
-        android:layout_marginBottom="279dp"
-        android:text="Registrasi" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="254dp"
+            android:layout_height="319dp"
+            android:layout_marginTop="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo" />
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="224dp"
+            android:layout_height="46dp"
+            style="@style/Text_Button"
+            android:text="L O G I N"
+            android:layout_marginTop="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+        <Button
+            android:id="@+id/btn_regis"
+            android:layout_width="224dp"
+            android:layout_height="46dp"
+            style="@style/Text_Button"
+            android:text="R E G I S T R A S I"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>
+
