@@ -1,6 +1,5 @@
 package com.android.warmindoinspirasiindonesia
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.database.Cursor
 import androidx.appcompat.app.AppCompatActivity
@@ -21,14 +20,14 @@ class CRUDRoleActivity: AppCompatActivity(), View.OnClickListener {
     private lateinit var roleListAdapter: RoleListAdapter
 
 
-    @SuppressLint("MissingInflatedId")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crudrole)
 
-        btnAdd = findViewById(R.id.btn_add)
-        recyclerViewRoles = findViewById(R.id.recyclerViewRoles)
 
+        recyclerViewRoles = findViewById(R.id.recyclerViewRoles)
+        btnAdd = findViewById(R.id.btn_add)
         btnAdd.setOnClickListener(this)
 
         idRole = ArrayList()
@@ -37,16 +36,14 @@ class CRUDRoleActivity: AppCompatActivity(), View.OnClickListener {
 
         storeDataInArrays()
 
-        roleListAdapter = RoleListAdapter(this)
-        recyclerViewRoles.layoutManager = LinearLayoutManager(this)
+        roleListAdapter = RoleListAdapter(this, idRole, role, status)
         recyclerViewRoles.adapter = roleListAdapter
-
+        recyclerViewRoles.layoutManager = LinearLayoutManager(this)
     }
 
     override fun onClick(view: View?) {
         if (view != null) {
             if (view.id == R.id.btn_add) {
-                // Aksi saat klik tombol Add
                 val addRoleIntent = Intent(this, AddRoleActivity::class.java)
                 startActivity(addRoleIntent)
             }

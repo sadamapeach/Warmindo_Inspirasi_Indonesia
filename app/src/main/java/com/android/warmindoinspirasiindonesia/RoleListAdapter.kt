@@ -7,12 +7,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.android.warmindoinspirasiindonesia.DBHelper
-import com.android.warmindoinspirasiindonesia.EditRoleActivity
-import com.android.warmindoinspirasiindonesia.R
-import com.android.warmindoinspirasiindonesia.Roles
 
-class RoleListAdapter(private val context: Context) :
+class RoleListAdapter(
+    private val context: Context,
+    idRole: ArrayList<String>,
+    role: ArrayList<String>,
+    status: ArrayList<String>
+) :
     RecyclerView.Adapter<RoleListAdapter.ViewHolder>() {
 
     private var roleList: List<Roles> = emptyList()

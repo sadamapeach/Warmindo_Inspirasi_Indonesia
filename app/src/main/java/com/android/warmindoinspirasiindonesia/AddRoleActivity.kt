@@ -17,6 +17,7 @@ class AddRoleActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var spinnerStatus: Spinner
     private lateinit var btnSave: Button
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_role)
@@ -26,12 +27,22 @@ class AddRoleActivity : AppCompatActivity(), View.OnClickListener {
         spinnerStatus = findViewById(R.id.spinner_status)
         btnSave = findViewById(R.id.btn_save)
 
+        setupSpinner()
+
         val statusOptions = arrayOf("Aktif", "Tidak Aktif")
         val statusAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, statusOptions)
-        spinnerStatus.adapter = statusAdapter
 
+        spinnerStatus.adapter = statusAdapter
         btnSave.setOnClickListener(this)
     }
+
+    private fun setupSpinner() {
+        val statusOptions = arrayOf("Aktif", "Tidak Aktif")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, statusOptions)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerStatus.adapter = adapter
+    }
+
 
     override fun onClick(view: View?) {
         if (view != null) {
