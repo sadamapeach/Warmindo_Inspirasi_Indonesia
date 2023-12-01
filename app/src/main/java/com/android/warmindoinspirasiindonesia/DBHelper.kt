@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 
 import android.database.sqlite.SQLiteOpenHelper
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Environment
 import android.provider.MediaStore
 import android.widget.Toast
@@ -276,7 +277,34 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         return db.rawQuery(query, null)
     }
 
-    fun getImageDataFromDatabase(userId: String): ByteArray? {
+    fun getPenggunaByID(idPengguna: String): Pengguna? {
+        val db = this.readableDatabase
+        val selectQuery = "SELECT * FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_IDPENGGUNA = ?"
+        val cursor = db.rawQuery(selectQuery, arrayOf(idPengguna))
+
+        var userData: Pengguna? = null
+
+        try {
+            if (cursor.moveToFirst()) {
+                userData = Pengguna(
+                    idPengguna = cursor.getString(cursor.getColumnIndex(KEY_PENGGUNA_IDPENGGUNA)),
+                    username = cursor.getString(cursor.getColumnIndex(KEY_PENGGUNA_USERNAME)),
+                    password = cursor.getString(cursor.getColumnIndex(KEY_PENGGUNA_PASSWORD)),
+                    nama = cursor.getString(cursor.getColumnIndex(KEY_PENGGUNA_NAMA)),
+                    role = cursor.getInt(cursor.getColumnIndex(KEY_PENGGUNA_IDROLE)),
+                    status = cursor.getString(cursor.getColumnIndex(KEY_PENGGUNA_STATUS)),
+                    foto = getFotoPengguna(idPengguna)
+                )
+            }
+        } finally {
+            cursor.close()
+        }
+
+        return userData
+    }
+
+
+    fun getAllFotoPengguna(userId: String): ByteArray? {
         val db = this.readableDatabase
         var imageData: ByteArray? = null
 
@@ -288,9 +316,55 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
                 imageData = it.getBlob(it.getColumnIndex("foto"))
             }
         }
-
         return imageData
     }
 
+//    fun getFotoPengguna(idPengguna: String): ByteArray? {
+//        val db = this.readableDatabase
+//        val query = "SELECT $KEY_PENGGUNA_FOTO FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_IDPENGGUNA = $idPengguna"
+//        val cursor: Cursor = db.rawQuery(query, null)
+//        var foto: ByteArray? = null
+//
+//        if (cursor.moveToFirst()) {
+//            foto = cursor.getBlob(cursor.getColumnIndex(KEY_PENGGUNA_FOTO))
+//        }
+//
+//        cursor.close()
+//        db.close()
+//
+//        return foto
+//    }
+    fun getFotoPengguna(idPengguna: String): ByteArray? {
+        val db = this.readableDatabase
+        val query = "SELECT $KEY_PENGGUNA_FOTO FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_IDPENGGUNA = ?"
+        val cursor: Cursor? = db.rawQuery(query, arrayOf(idPengguna))
+
+        var foto: ByteArray? = null
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                foto = cursor.getBlob(cursor.getColumnIndex(KEY_PENGGUNA_FOTO))
+            }
+            cursor.close()
+        }
+
+        return foto
+    }
+    fun updatePengguna(id: String, nama: String, status: String, idRole: Int, foto: Bitmap): Boolean {
+        val objectByteOutputStream = ByteArrayOutputStream()
+        foto.compress(Bitmap.CompressFormat.JPEG, 100, objectByteOutputStream)
+        val imageInBytes = objectByteOutputStream.toByteArray()
+
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(KEY_PENGGUNA_NAMA, nama)
+        contentValues.put(KEY_PENGGUNA_STATUS, status)
+        contentValues.put(KEY_PENGGUNA_IDROLE, idRole)
+        contentValues.put(KEY_PENGGUNA_FOTO, imageInBytes)
+
+        val result = db.update(TABLE_PENGGUNA, contentValues, "$KEY_PENGGUNA_IDPENGGUNA = ?", arrayOf(id))
+
+        return result != -1
+    }
 
 }

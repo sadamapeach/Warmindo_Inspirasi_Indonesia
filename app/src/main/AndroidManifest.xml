@@ -16,6 +16,9 @@
         android:theme="@style/Theme.WarmindoInspirasiIndonesia"
         tools:targetApi="31">
         <activity
+            android:name=".UpdatePenggunaActivity"
+            android:exported="false" />
+        <activity
             android:name=".UpdateAnggotaActivity"
             android:exported="false" />
         <activity

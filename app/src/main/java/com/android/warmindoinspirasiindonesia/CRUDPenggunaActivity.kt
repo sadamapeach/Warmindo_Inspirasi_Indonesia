@@ -16,6 +16,7 @@ class CRUDPenggunaActivity : AppCompatActivity(), View.OnClickListener {
     private var idPengguna = ArrayList<String>()
     private var namaPengguna = ArrayList<String>()
     private var role = ArrayList<String>()
+    private var status = ArrayList<String>()
     private var foto = ArrayList<String>()
     private lateinit var customAdapter: CustomAdapter
 
@@ -30,11 +31,12 @@ class CRUDPenggunaActivity : AppCompatActivity(), View.OnClickListener {
         idPengguna = ArrayList()
         namaPengguna = ArrayList()
         role = ArrayList()
+        status = ArrayList()
         foto = ArrayList()
 
         storeDataInArrays()
 
-        customAdapter = CustomAdapter(this, idPengguna, namaPengguna, role, foto)
+        customAdapter = CustomAdapter(this, idPengguna, namaPengguna, role, status, foto)
         recyclerView.adapter = customAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
     }
@@ -59,6 +61,7 @@ class CRUDPenggunaActivity : AppCompatActivity(), View.OnClickListener {
                 idPengguna.add(cursor.getString(0))
                 namaPengguna.add(cursor.getString(3))
                 role.add(cursor.getString(7))
+                status.add(cursor.getString(4))
             }
         }
     }
