@@ -16,10 +16,10 @@
         android:theme="@style/Theme.WarmindoInspirasiIndonesia"
         tools:targetApi="31">
         <activity
-            android:name=".UpdatePenggunaActivity"
+            android:name=".EditRoleActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdateAnggotaActivity"
+            android:name=".UpdatePenggunaActivity"
             android:exported="false" />
         <activity
             android:name=".AddPenggunaActivity"

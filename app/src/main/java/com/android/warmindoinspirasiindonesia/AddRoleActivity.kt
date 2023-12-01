@@ -15,7 +15,8 @@ class AddRoleActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var etIdRole: EditText
     private lateinit var etRole: EditText
     private lateinit var spinnerStatus: Spinner
-    private lateinit var btnSave: Button
+    private lateinit var btnAdd: Button
+    private lateinit var DBHelper: DBHelper
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,15 +26,17 @@ class AddRoleActivity : AppCompatActivity(), View.OnClickListener {
         etIdRole = findViewById(R.id.et_idRole)
         etRole = findViewById(R.id.et_role)
         spinnerStatus = findViewById(R.id.spinner_status)
-        btnSave = findViewById(R.id.btn_save)
-
-        setupSpinner()
+        btnAdd = findViewById(R.id.btn_add)
 
         val statusOptions = arrayOf("Aktif", "Tidak Aktif")
         val statusAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, statusOptions)
 
         spinnerStatus.adapter = statusAdapter
-        btnSave.setOnClickListener(this)
+        DBHelper = DBHelper(this)
+
+        setupSpinner()
+
+        btnAdd.setOnClickListener(this)
     }
 
     private fun setupSpinner() {
@@ -46,7 +49,7 @@ class AddRoleActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View?) {
         if (view != null) {
-            if (view.id == R.id.btn_save) {
+            if (view.id == R.id.btn_add) {
                 val db = DBHelper(this)
 
                 val idRole = etIdRole.text.toString().toIntOrNull()
@@ -54,11 +57,16 @@ class AddRoleActivity : AppCompatActivity(), View.OnClickListener {
                 val status = spinnerStatus.selectedItem.toString()
 
                 if (idRole != null && role.isNotEmpty() && status.isNotEmpty()) {
+                    val defaultStatus = "Tidak Aktif"
                     db.addRole(idRole, role, status)
+
+                    etIdRole.text.clear()
+                    etRole.text.clear()
                 } else {
                     Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
+
 }

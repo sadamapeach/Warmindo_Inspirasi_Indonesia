@@ -20,11 +20,9 @@ class CRUDRoleActivity: AppCompatActivity(), View.OnClickListener {
     private lateinit var roleListAdapter: RoleListAdapter
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crudrole)
-
 
         recyclerViewRoles = findViewById(R.id.recyclerViewRoles)
         btnAdd = findViewById(R.id.btn_add)
@@ -58,16 +56,10 @@ class CRUDRoleActivity: AppCompatActivity(), View.OnClickListener {
             Toast.makeText(this, "No data.", Toast.LENGTH_SHORT).show()
         } else {
             while (cursor.moveToNext()) {
-                idRole.add(cursor.getInt(0).toString())
-                role.add(cursor.getString(3))
-                status.add(cursor.getString(4))
+                idRole.add(cursor.getString(0))
+                role.add(cursor.getString(1))
+                status.add(cursor.getString(2))
             }
         }
     }
-
-
-
-
-
-
 }

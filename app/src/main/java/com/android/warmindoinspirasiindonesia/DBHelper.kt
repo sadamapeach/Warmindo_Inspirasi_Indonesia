@@ -271,11 +271,10 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
     }
 
     fun getAllRoles2(): Cursor {
-        val query = "SELECT $TABLE_ROLE.*, $TABLE_PENGGUNA.role FROM $TABLE_ROLE INNER JOIN $TABLE_PENGGUNA ON $TABLE_ROLE.idRole = $TABLE_PENGGUNA.idRole"
+        val query = "SELECT * FROM $TABLE_ROLE"
         val db = this.readableDatabase
         return db.rawQuery(query, null)
     }
-
 
     fun getAllPengguna(): Cursor {
         val query = "SELECT ${TABLE_PENGGUNA}.*, ${TABLE_ROLE}.role FROM ${TABLE_PENGGUNA} INNER JOIN ${TABLE_ROLE} ON ${TABLE_PENGGUNA}.idRole = ${TABLE_ROLE}.idRole"
