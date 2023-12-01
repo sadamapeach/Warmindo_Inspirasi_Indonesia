@@ -250,7 +250,6 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         db.close()
     }
 
-
     fun getAllRoles(): List<Roles> {
         val roleList = mutableListOf<Roles>()
 
@@ -269,6 +268,12 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
             }
         }
         return roleList
+    }
+
+    fun getAllRoles2(): Cursor {
+        val query = "SELECT * FROM $TABLE_ROLE"
+        val db = this.readableDatabase
+        return db.rawQuery(query, null)
     }
 
     fun getAllPengguna(): Cursor {
@@ -404,6 +409,21 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
             db.endTransaction()
             db.close()
         }
+    }
+
+    fun updateRole(idRole: Int, roleName: String, status: String): Boolean {
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(KEY_ROLE_ROLE, roleName)
+        contentValues.put(KEY_ROLE_STATUS, status)
+
+        val result = db.update(TABLE_ROLE, contentValues, "$KEY_ROLE_IDROLE = ?", arrayOf(idRole.toString()))
+
+        return result != -1
+    }
+
+    fun deleteRole(idRole: Int) {
+        // logic delete role
     }
 
 }

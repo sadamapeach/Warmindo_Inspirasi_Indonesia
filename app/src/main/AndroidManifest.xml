@@ -20,7 +20,7 @@
             android:parentActivityName=".CRUDPenggunaActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdateAnggotaActivity"
+            android:name=".EditRoleActivity"
             android:exported="false" />
         <activity
             android:name=".AddPenggunaActivity"
