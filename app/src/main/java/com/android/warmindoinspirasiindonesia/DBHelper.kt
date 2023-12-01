@@ -251,25 +251,12 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
     }
 
 
-    fun getAllRoles(): List<Roles> {
-        val roleList = mutableListOf<Roles>()
-
+    fun getAllRoles(): Cursor {
+        val query = "SELECT $TABLE_ROLE.*, $TABLE_PENGGUNA.role FROM $TABLE_ROLE INNER JOIN $TABLE_PENGGUNA ON $TABLE_ROLE.idRole = $TABLE_PENGGUNA.idRole"
         val db = this.readableDatabase
-        val query = "SELECT * FROM $TABLE_ROLE"
-        val cursor = db.rawQuery(query, null)
-
-        cursor.use {
-            while (it.moveToNext()) {
-                val roleId = it.getInt(it.getColumnIndex(KEY_ROLE_IDROLE))
-                val roleName = it.getString(it.getColumnIndex(KEY_ROLE_ROLE))
-                val roleStatus = it.getString(it.getColumnIndex(KEY_ROLE_STATUS))
-
-                val role = Roles(roleId, roleName, roleStatus)
-                roleList.add(role)
-            }
-        }
-        return roleList
+        return db.rawQuery(query, null)
     }
+
 
     fun getAllPengguna(): Cursor {
         val query = "SELECT ${TABLE_PENGGUNA}.*, ${TABLE_ROLE}.role FROM ${TABLE_PENGGUNA} INNER JOIN ${TABLE_ROLE} ON ${TABLE_PENGGUNA}.idRole = ${TABLE_ROLE}.idRole"
@@ -363,6 +350,17 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         contentValues.put(KEY_PENGGUNA_FOTO, imageInBytes)
 
         val result = db.update(TABLE_PENGGUNA, contentValues, "$KEY_PENGGUNA_IDPENGGUNA = ?", arrayOf(id))
+
+        return result != -1
+    }
+
+    fun updateRole(idRole: Int, roleName: String, status: String): Boolean {
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(KEY_ROLE_ROLE, roleName)
+        contentValues.put(KEY_ROLE_STATUS, status)
+
+        val result = db.update(TABLE_ROLE, contentValues, "$KEY_ROLE_IDROLE = ?", arrayOf(idRole.toString()))
 
         return result != -1
     }

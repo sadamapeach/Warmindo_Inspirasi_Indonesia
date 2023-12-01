@@ -2,23 +2,25 @@ package com.android.warmindoinspirasiindonesia
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.database.Cursor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class CRUDRoleActivity: AppCompatActivity(), View.OnClickListener {
 
+    private var idRole = ArrayList<String>()
+    private var role = ArrayList<String>()
+    private var status = ArrayList<String>()
     private lateinit var btnAdd: Button
     private lateinit var recyclerViewRoles: RecyclerView
     private lateinit var roleListAdapter: RoleListAdapter
 
-    private fun getRolesFromDatabase(): List<com.android.warmindoinspirasiindonesia.Roles> {
-        val dbHelper = DBHelper(this)
-        return dbHelper.getAllRoles()
-    }
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,20 +31,17 @@ class CRUDRoleActivity: AppCompatActivity(), View.OnClickListener {
 
         btnAdd.setOnClickListener(this)
 
+        idRole = ArrayList()
+        role = ArrayList()
+        status = ArrayList()
+
+        storeDataInArrays()
+
         roleListAdapter = RoleListAdapter(this)
         recyclerViewRoles.layoutManager = LinearLayoutManager(this)
         recyclerViewRoles.adapter = roleListAdapter
 
-        // Ambil data dari database dan perbarui adapter
-        updateAdapterData()
     }
-
-    private fun updateAdapterData() {
-        val dbHelper = DBHelper(this)
-        val rolesFromDatabase = dbHelper.getAllRoles()
-        roleListAdapter.updateData(rolesFromDatabase)
-    }
-
 
     override fun onClick(view: View?) {
         if (view != null) {
@@ -53,4 +52,25 @@ class CRUDRoleActivity: AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+
+    private fun storeDataInArrays() {
+        val db = DBHelper(this)
+        val cursor: Cursor = db.getAllRoles()
+
+        if (cursor.count == 0) {
+            Toast.makeText(this, "No data.", Toast.LENGTH_SHORT).show()
+        } else {
+            while (cursor.moveToNext()) {
+                idRole.add(cursor.getInt(0).toString())
+                role.add(cursor.getString(3))
+                status.add(cursor.getString(4))
+            }
+        }
+    }
+
+
+
+
+
+
 }
