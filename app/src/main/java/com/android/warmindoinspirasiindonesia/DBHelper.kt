@@ -250,8 +250,27 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         db.close()
     }
 
+    fun getAllRoles(): List<Roles> {
+        val roleList = mutableListOf<Roles>()
 
-    fun getAllRoles(): Cursor {
+        val db = this.readableDatabase
+        val query = "SELECT * FROM $TABLE_ROLE"
+        val cursor = db.rawQuery(query, null)
+
+        cursor.use {
+            while (it.moveToNext()) {
+                val roleId = it.getInt(it.getColumnIndex(KEY_ROLE_IDROLE))
+                val roleName = it.getString(it.getColumnIndex(KEY_ROLE_ROLE))
+                val roleStatus = it.getString(it.getColumnIndex(KEY_ROLE_STATUS))
+
+                val role = Roles(roleId, roleName, roleStatus)
+                roleList.add(role)
+            }
+        }
+        return roleList
+    }
+
+    fun getAllRoles2(): Cursor {
         val query = "SELECT $TABLE_ROLE.*, $TABLE_PENGGUNA.role FROM $TABLE_ROLE INNER JOIN $TABLE_PENGGUNA ON $TABLE_ROLE.idRole = $TABLE_PENGGUNA.idRole"
         val db = this.readableDatabase
         return db.rawQuery(query, null)
