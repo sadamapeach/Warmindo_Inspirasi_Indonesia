@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -45,6 +46,6 @@ class RoleListAdapter(context: Context, idRole: ArrayList<String>, role: ArrayLi
         var tvIdRole: TextView = itemView.findViewById(R.id.tv_idRole)
         var tvRole: TextView = itemView.findViewById(R.id.tvRole)
         var tvStatus: TextView = itemView.findViewById(R.id.tvStatus)
-        var btnEdit: Button = itemView.findViewById(R.id.btnEdit)
+        var btnEdit: ImageView = itemView.findViewById(R.id.btnEdit)
     }
 }

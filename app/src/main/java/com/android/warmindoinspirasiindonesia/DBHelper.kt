@@ -271,7 +271,7 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
     }
 
     fun getAllRoles2(): Cursor {
-        val query = "SELECT * FROM $TABLE_ROLE"
+        val query = "SELECT * FROM ${TABLE_ROLE}"
         val db = this.readableDatabase
         return db.rawQuery(query, null)
     }
@@ -411,15 +411,30 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         }
     }
 
-    fun updateRole(idRole: Int, roleName: String, status: String): Boolean {
+    fun updateRole(idRole: String, roleName: String, status: String): Boolean {
         val db = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(KEY_ROLE_ROLE, roleName)
         contentValues.put(KEY_ROLE_STATUS, status)
 
-        val result = db.update(TABLE_ROLE, contentValues, "$KEY_ROLE_IDROLE = ?", arrayOf(idRole.toString()))
+        try {
+            db.beginTransaction()
+            val result = db.update(TABLE_ROLE, contentValues, "$KEY_ROLE_IDROLE = ?", arrayOf(idRole))
 
-        return result != -1
+            if (result > 0) {
+                db.setTransactionSuccessful()
+                Toast.makeText(context, "Berhasil mengedit role", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Gagal mengedit role", Toast.LENGTH_SHORT).show()
+            }
+
+            return result != -1
+        } catch (e: Exception) {
+            Toast.makeText(context, "Gagal mengupdate pengguna", Toast.LENGTH_SHORT).show()
+            return false
+        } finally {
+            db.endTransaction()
+        }
     }
 
     fun deleteRole(idRole: Int) {

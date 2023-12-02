@@ -108,11 +108,6 @@ class UpdatePenggunaActivity : AppCompatActivity(), View.OnClickListener {
 
                 DBHelper.updatePengguna(userId, updatedName, updatedStatus, idRole, safeThumbnail)
                 finish()
-//                if (success) {
-//                    Toast.makeText(this, "Pengguna berhasil diperbarui", Toast.LENGTH_SHORT).show()
-//                } else {
-//                    Toast.makeText(this, "Gagal memperbarui pengguna", Toast.LENGTH_SHORT).show()
-//                }
             }
         }
     }
