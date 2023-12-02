@@ -1,5 +1,6 @@
 package com.android.warmindoinspirasiindonesia
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -32,7 +33,7 @@ class CustomAdapter(context: Context, idPengguna: ArrayList<String>, namaPenggun
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.tvIdPengguna.text = idPengguna[position]
+        //holder.tvIdPengguna.text = idPengguna[position]
         holder.tvNamaPengguna.text = namaPengguna[position]
         holder.tvRole.text = role[position]
         holder.tvStatus.text = status[position]
@@ -48,6 +49,10 @@ class CustomAdapter(context: Context, idPengguna: ArrayList<String>, namaPenggun
             context.startActivity(intent)
         }
 
+        holder.btnDelete.setOnClickListener {
+            confirmDialog(holder, position)
+        }
+
         val imageData: ByteArray? = dbHelper.getAllFotoPengguna(idPengguna[position])
 
         if (imageData != null) {
@@ -58,16 +63,42 @@ class CustomAdapter(context: Context, idPengguna: ArrayList<String>, namaPenggun
         }
     }
 
+    fun confirmDialog(holder: MyViewHolder, position: Int) {
+        val builder = AlertDialog.Builder(holder.itemView.context)
+        builder.setTitle("Konfirmasi Penghapusan")
+        builder.setMessage("Apakah Anda yakin ingin menghapus ${holder.tvNamaPengguna.text}?")
+
+        builder.setPositiveButton("Yes") { _, _ ->
+            val db = DBHelper(holder.itemView.context)
+            db.deletePengguna(idPengguna[position])
+
+            idPengguna.removeAt(position)
+            namaPengguna.removeAt(position)
+            status.removeAt(position)
+            role.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, itemCount)
+        }
+
+        builder.setNegativeButton("No") { _, _ ->
+            // Do nothing if "No" is clicked
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
     override fun getItemCount(): Int {
         return idPengguna.size
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var tvIdPengguna: TextView = itemView.findViewById(R.id.tv_idPengguna)
+        //var tvIdPengguna: TextView = itemView.findViewById(R.id.tv_idPengguna)
         var tvNamaPengguna: TextView = itemView.findViewById(R.id.tv_namaPengguna)
         var tvRole: TextView = itemView.findViewById(R.id.tv_role)
         var tvStatus: TextView = itemView.findViewById(R.id.tv_status)
         var ivFoto: ImageView = itemView.findViewById(R.id.iv_foto)
-        var btnEdit: Button = itemView.findViewById(R.id.btn_edit)
+        var btnEdit: ImageView = itemView.findViewById(R.id.btn_edit)
+        var btnDelete: ImageView = itemView.findViewById(R.id.btn_delete)
     }
 }

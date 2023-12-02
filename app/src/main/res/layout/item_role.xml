@@ -52,23 +52,40 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvRole" />
 
             <!-- Tombol Edit -->
+<!--            <ImageView-->
+<!--                android:id="@+id/btnEdit"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/icon_edit"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/btnDelete"-->
+<!--                app:layout_constraintTop_toTopOf="parent"/>-->
+
+
+<!--            &lt;!&ndash; Tombol Delete &ndash;&gt;-->
+<!--            <ImageView-->
+<!--                android:id="@+id/btnDelete"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/icon_delete"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"/>-->
             <ImageView
                 android:id="@+id/btnEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/baseline_edit_24"
-                app:layout_constraintEnd_toStartOf="@+id/btnDelete"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:layout_marginStart="276dp"
+                android:src="@drawable/icon_edit"
+                app:layout_constraintStart_toEndOf="@+id/tv_idRole"
+                app:layout_constraintTop_toTopOf="@+id/tv_idRole" />
 
-
-            <!-- Tombol Delete -->
             <ImageView
                 android:id="@+id/btnDelete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/baseline_delete_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:layout_marginStart="8dp"
+                android:src="@drawable/icon_delete"
+                app:layout_constraintStart_toEndOf="@+id/btnEdit"
+                app:layout_constraintTop_toTopOf="@+id/tv_idRole" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

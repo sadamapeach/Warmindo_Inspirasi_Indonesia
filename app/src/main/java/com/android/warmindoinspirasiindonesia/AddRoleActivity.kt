@@ -30,7 +30,6 @@ class AddRoleActivity : AppCompatActivity(), View.OnClickListener {
 
         val statusOptions = arrayOf("Aktif", "Tidak Aktif")
         val statusAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, statusOptions)
-
         spinnerStatus.adapter = statusAdapter
         DBHelper = DBHelper(this)
 
@@ -59,14 +58,11 @@ class AddRoleActivity : AppCompatActivity(), View.OnClickListener {
                 if (idRole != null && role.isNotEmpty() && status.isNotEmpty()) {
                     val defaultStatus = "Tidak Aktif"
                     db.addRole(idRole, role, status)
-
-                    etIdRole.text.clear()
-                    etRole.text.clear()
+                    finish()
                 } else {
                     Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
-
 }
