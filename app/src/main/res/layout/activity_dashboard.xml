@@ -22,4 +22,20 @@
         android:text="CRUD Role"
         app:layout_constraintTop_toBottomOf="@+id/btn_pengguna"
         tools:layout_editor_absoluteX="160dp" />
+
+    <Button
+        android:id="@+id/btn_warung"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tambah Warung"
+        app:layout_constraintTop_toBottomOf="@+id/btn_role"
+        tools:layout_editor_absoluteX="160dp" />
+
+    <Button
+        android:id="@+id/btn_transaksi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tambah Transaksi"
+        app:layout_constraintTop_toBottomOf="@+id/btn_warung"
+        tools:layout_editor_absoluteX="160dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
