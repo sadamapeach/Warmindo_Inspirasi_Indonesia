@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".AddWarungActivity">
+
+    <EditText
+        android:id="@+id/et_idwarung"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="ID Warung"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/et_namawarung"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nama Warung"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/btn_selectImageLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pilih Logo" />
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/pic_add" />
+
+    <Button
+        android:id="@+id/btn_selectImageGambar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pilih Gambar" />
+
+    <ImageView
+        android:id="@+id/iv_gambar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/pic_add" />
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Tambah Warung" />
+
+</LinearLayout>
