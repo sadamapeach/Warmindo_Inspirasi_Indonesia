@@ -1,5 +1,6 @@
 package com.android.warmindoinspirasiindonesia
 
+import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
@@ -107,6 +108,7 @@ class UpdatePenggunaActivity : AppCompatActivity(), View.OnClickListener {
                 //val updatedFoto: ByteArray? = // Ambil data foto yang baru dari antarmuka, misalnya dengan metode getImageData()
 
                 DBHelper.updatePengguna(userId, updatedName, updatedStatus, idRole, safeThumbnail)
+                setResult(Activity.RESULT_OK)
                 finish()
             }
         }

@@ -12,10 +12,16 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 
-class CustomAdapter(context: Context, idPengguna: ArrayList<String>, namaPengguna: ArrayList<String>, role: ArrayList<String>, status: ArrayList<String>, foto: ArrayList<String>) :
+class CustomAdapter(context: Context, idPengguna: ArrayList<String>,
+                    namaPengguna: ArrayList<String>, role: ArrayList<String>,
+                    status: ArrayList<String>, foto: ArrayList<String>) :
     RecyclerView.Adapter<CustomAdapter.MyViewHolder>() {
+    companion object {
+        const val EDIT_PENGGUNA_REQUEST_CODE = 1
+    }
 
     private val context: Context = context
     private val idPengguna: ArrayList<String> = idPengguna
@@ -25,8 +31,8 @@ class CustomAdapter(context: Context, idPengguna: ArrayList<String>, namaPenggun
     private val foto: ArrayList<String> = foto
     private val dbHelper: DBHelper = DBHelper(context)
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+
         val inflater: LayoutInflater = LayoutInflater.from(context)
         val view: View = inflater.inflate(R.layout.pengguna_row, parent, false)
         return MyViewHolder(view)
@@ -46,7 +52,7 @@ class CustomAdapter(context: Context, idPengguna: ArrayList<String>, namaPenggun
             intent.putExtra("status", status[position])
             intent.putExtra("role", role[position])
             intent.putExtra("foto", foto)
-            context.startActivity(intent)
+            (context as AppCompatActivity).startActivityForResult(intent, EDIT_PENGGUNA_REQUEST_CODE)
         }
 
         holder.btnDelete.setOnClickListener {

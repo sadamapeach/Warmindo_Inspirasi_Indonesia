@@ -1,5 +1,6 @@
 package com.android.warmindoinspirasiindonesia
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -112,6 +113,7 @@ class AddPenggunaActivity : AppCompatActivity(), View.OnClickListener {
                         thumbnail ?: BitmapFactory.decodeResource(resources, defaultImageResource)
 
                     db.addPengguna(username, password, nama, role, status, safeThumbnail)
+                    setResult(Activity.RESULT_OK)
                     finish()
                 } else {
                     Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()

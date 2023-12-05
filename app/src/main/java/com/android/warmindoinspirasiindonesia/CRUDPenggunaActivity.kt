@@ -36,9 +36,9 @@ class CRUDPenggunaActivity : AppCompatActivity(), View.OnClickListener {
 
         storeDataInArrays()
 
-        customAdapter = CustomAdapter(this, idPengguna, namaPengguna, role, status, foto)
-        recyclerView.adapter = customAdapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+//        customAdapter = CustomAdapter(this, idPengguna, namaPengguna, role, status, foto)
+//        recyclerView.adapter = customAdapter
+//        recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
     override fun onClick(view: View?) {

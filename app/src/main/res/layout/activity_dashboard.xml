@@ -6,20 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".DashboardActivity">
 
-    <Button
-        android:id="@+id/btn_pengguna"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="364dp"
-        android:text="CRUD Pengguna"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/btn_role"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="CRUD Role"
-        app:layout_constraintTop_toBottomOf="@+id/btn_pengguna"
-        tools:layout_editor_absoluteX="160dp" />
+        <Button
+            android:id="@+id/btn_pengguna"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CRUD Pengguna"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <Button
+            android:id="@+id/btn_role"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CRUD Role"
+            app:layout_constraintTop_toBottomOf="@+id/btn_pengguna"
+            tools:layout_editor_absoluteX="160dp" />
+
+        <Button
+            android:id="@+id/btn_transaksi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CRUD Transaksi"
+            app:layout_constraintTop_toBottomOf="@+id/btn_role"
+            tools:layout_editor_absoluteX="160dp" />
+
+        <Button
+            android:id="@+id/btn_warung"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CRUD Warung"
+            app:layout_constraintTop_toBottomOf="@+id/btn_transaksi"
+            tools:layout_editor_absoluteX="160dp" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import at.favre.lib.crypto.bcrypt.BCrypt
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var etUsername: EditText
@@ -41,7 +42,8 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                     if (password == confirmPassword) {
                         val checkUsername = db.checkUsername(username)
                         if (!checkUsername) {
-                            db.addUser(username, password)
+                            val hashedPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray())
+                            db.addUser(username, hashedPassword)
 
                             etUsername.text.clear()
                             etPassword.text.clear()

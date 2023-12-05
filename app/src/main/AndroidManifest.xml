@@ -16,9 +16,23 @@
         android:theme="@style/Theme.WarmindoInspirasiIndonesia"
         tools:targetApi="31">
         <activity
-            android:name=".UpdatePenggunaActivity"
-            android:parentActivityName=".CRUDPenggunaActivity"
+            android:name=".LogoutActivity"
             android:exported="false" />
+        <activity
+            android:name=".DataTransaksiActivity"
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".MainActivity2" -->
+        <!-- android:exported="false" /> -->
+        <activity
+            android:name=".DashboardActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".AddTransaksiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UpdatePenggunaActivity"
+            android:exported="false"
+            android:parentActivityName=".CRUDPenggunaActivity" />
         <activity
             android:name=".EditRoleActivity"
             android:exported="false" />
@@ -45,7 +59,7 @@
             android:exported="false"
             android:label="Tes" />
         <activity
-            android:name=".MainActivity"
+            android:name=".MainActivity2"
             android:exported="true"
             android:label="Tes">
             <intent-filter>

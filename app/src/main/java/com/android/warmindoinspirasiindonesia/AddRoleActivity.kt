@@ -1,5 +1,6 @@
 package com.android.warmindoinspirasiindonesia
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -58,6 +59,7 @@ class AddRoleActivity : AppCompatActivity(), View.OnClickListener {
                 if (idRole != null && role.isNotEmpty() && status.isNotEmpty()) {
                     val defaultStatus = "Tidak Aktif"
                     db.addRole(idRole, role, status)
+                    setResult(Activity.RESULT_OK)
                     finish()
                 } else {
                     Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()

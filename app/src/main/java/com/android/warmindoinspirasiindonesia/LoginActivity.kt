@@ -1,12 +1,15 @@
 package com.android.warmindoinspirasiindonesia
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import at.favre.lib.crypto.bcrypt.BCrypt
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var etUsername: EditText
@@ -32,15 +35,34 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 val username = etUsername.text.toString()
                 val password = etPassword.text.toString()
 
-                val checkCredential = db.checkCredential(username, password)
-                if (checkCredential) {
-                    val dashboardIntent = Intent(this, DashboardActivity::class.java)
-                    startActivity(dashboardIntent)
-                } else {
-                    Toast.makeText(this, "Credential doesn't match", Toast.LENGTH_SHORT).show()
-                }
+                val storedHashedPassword = db.getHashedPassword(username)
 
+                if (storedHashedPassword != null) {
+                    val passwordMatches = BCrypt.verifyer().verify(password.toCharArray(), storedHashedPassword).verified
+
+                    if (passwordMatches) {
+                        saveLoginStatus(username)
+
+                        val dashboardIntent = Intent(this, MainActivity2::class.java)
+                        startActivity(dashboardIntent)
+                        finish()
+                    } else {
+                        Toast.makeText(this, "Credential doesn't match", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
+                }
             }
         }
+    }
+
+    private fun saveLoginStatus(username: String) {
+        val sharedPreferences: SharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+
+        editor.putBoolean("isLoggedIn", true)
+        editor.putString("username", username)
+
+        editor.apply()
     }
 }

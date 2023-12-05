@@ -15,10 +15,13 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE_NAME,null,DATABASE_VERSION) {
     companion object {
-        private val DATABASE_VERSION = 1
+        private val DATABASE_VERSION = 4
         private val DATABASE_NAME = "Warmindo"
 
         // users
@@ -50,6 +53,22 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         private val KEY_AKTVPENGGUNA_WAKTU = "waktu"
         private val KEY_AKTVPENGGUNA_IDPENGGUNA = "idPengguna"
         private val KEY_AKTVPENGGUNA_AKTIVITAS = "aktivitas"
+
+        // transaksi
+        private val TABLE_TRANSAKSI = "Transaksi"
+        private val KEY_TRANSAKSI_IDTRANSAKSI = "idTransaksi"
+        private val KEY_TRANSAKSI_TANGGAL = "tanggal"
+        private val KEY_TRANSAKSI_WAKTU = "waktu"
+        private val KEY_TRANSAKSI_SHIFT = "shift"
+        private val KEY_TRANSAKSI_IDPENGGUNA = "idPengguna"
+        private val KEY_TRANSAKSI_IDPELANGGAN = "idPelanggan"
+        private val KEY_TRANSAKSI_STATUS = "status"
+        private val KEY_TRANSAKSI_KODEMEJA = "kodeMeja"
+        private val KEY_TRANSAKSI_NAMAPELANGGAN = "namaPelanggan"
+        private val KEY_TRANSAKSI_TOTAL = "total"
+        private val KEY_TRANSAKSI_METODEBAYAR = "metodePembayaran"
+        private val KEY_TRANSAKSI_TOTALDISKON = "totalDiskon"
+        private val KEY_TRANSAKSI_IDPROMOSI = "idPromosi"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -91,6 +110,24 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
 //                "FOREIGN KEY(" + KEY_AKTVPENGGUNA_IDPENGGUNA + ") REFERENCES " + TABLE_PENGGUNA + "(" + KEY_PENGGUNA_IDPENGGUNA + ")")
 //
 //        db.execSQL(queryAktvPengguna)
+
+        // transaksi
+        val queryTransaksi = ("CREATE TABLE " + TABLE_TRANSAKSI + " ("
+                        + KEY_TRANSAKSI_IDTRANSAKSI + " TEXT PRIMARY KEY , "
+                        + KEY_TRANSAKSI_TANGGAL + " TEXT, "
+                        + KEY_TRANSAKSI_WAKTU + " TEXT, "
+                        + KEY_TRANSAKSI_SHIFT + " INTEGER, "
+                        + KEY_TRANSAKSI_IDPENGGUNA + " INTEGER, "
+                        + KEY_TRANSAKSI_IDPELANGGAN + " INTEGER, "
+                        + KEY_TRANSAKSI_STATUS + " TEXT, "
+                        + KEY_TRANSAKSI_KODEMEJA + " TEXT, "
+                        + KEY_TRANSAKSI_NAMAPELANGGAN + " TEXT, "
+                        + KEY_TRANSAKSI_TOTAL + " INTEGER, "
+                        + KEY_TRANSAKSI_METODEBAYAR + " TEXT, "
+                        + KEY_TRANSAKSI_TOTALDISKON + " INTEGER, "
+                        + KEY_TRANSAKSI_IDPROMOSI + " INTEGER" + ")")
+
+        db.execSQL(queryTransaksi)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, p1: Int, p2: Int) {
@@ -101,6 +138,8 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PENGGUNA)
 
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_AKTVPENGGUNA)
+
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRANSAKSI)
         onCreate(db)
     }
 
@@ -142,6 +181,21 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         db.close()
 
         return usernameExists
+    }
+
+    fun getHashedPassword(username: String): String? {
+        val db = this.readableDatabase
+        val query = "SELECT $KEY_PENGGUNA_PASSWORD FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_USERNAME = ?"
+        val cursor: Cursor = db.rawQuery(query, arrayOf(username))
+        var hashedPassword: String? = null
+
+        if (cursor.moveToFirst()) {
+            hashedPassword = cursor.getString(cursor.getColumnIndex(KEY_PENGGUNA_PASSWORD))
+        }
+
+        cursor.close()
+        db.close()
+        return hashedPassword
     }
 
     fun checkCredential(username: String, password: String): Boolean {
@@ -439,6 +493,110 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
 
     fun deleteRole(idRole: Int) {
         // logic delete role
+    }
+
+    fun addTransaksi(
+        idTransaksi: String,
+        tanggal: String,
+        waktu: String,
+        shift: Int,
+        idPengguna: String,
+        idPelanggan: String?,
+        status: String,
+        kodeMeja: String,
+        namaPelanggan: String?,
+        total: Int,
+        metodePembayaran: String,
+        totalDiskon: Int,
+        idPromosi: String?
+    ) {
+        val db = writableDatabase
+
+        val values = ContentValues().apply {
+            put(KEY_TRANSAKSI_IDTRANSAKSI, idTransaksi)
+            put(KEY_TRANSAKSI_TANGGAL, tanggal)
+            put(KEY_TRANSAKSI_WAKTU, waktu)
+            put(KEY_TRANSAKSI_SHIFT, shift)
+            put(KEY_TRANSAKSI_IDPENGGUNA, idPengguna)
+            put(KEY_TRANSAKSI_IDPELANGGAN, idPelanggan)
+            put(KEY_TRANSAKSI_STATUS, status)
+            put(KEY_TRANSAKSI_KODEMEJA, kodeMeja)
+            put(KEY_TRANSAKSI_NAMAPELANGGAN, namaPelanggan)
+            put(KEY_TRANSAKSI_TOTAL, total)
+            put(KEY_TRANSAKSI_METODEBAYAR, metodePembayaran)
+            put(KEY_TRANSAKSI_TOTALDISKON, totalDiskon)
+            put(KEY_TRANSAKSI_IDPROMOSI, idPromosi)
+        }
+
+        val result = db.insert(TABLE_TRANSAKSI, null, values)
+
+        if (result != -1L) {
+            Toast.makeText(context, "Berhasil menambahkan transaksi", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Gagal menambahkan transaksi", Toast.LENGTH_SHORT).show()
+        }
+
+        db.close()
+    }
+
+    fun getAllTransaksi(): Cursor {
+        val query = "SELECT * FROM ${TABLE_TRANSAKSI}"
+        val db = this.readableDatabase
+        return db.rawQuery(query, null)
+    }
+
+    fun getTotalHariIni(): Int {
+        var totalHariIni = 0
+
+        val db = this.readableDatabase
+
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val todayDate = sdf.format(Date())
+
+        val query = "SELECT SUM($KEY_TRANSAKSI_TOTAL) AS total FROM $TABLE_TRANSAKSI WHERE $KEY_TRANSAKSI_TANGGAL = ?"
+
+        val cursor: Cursor = db.rawQuery(query, arrayOf(todayDate))
+        if (cursor.moveToFirst()) {
+            totalHariIni = cursor.getInt(cursor.getColumnIndex("total"))
+        }
+        cursor.close()
+
+        return totalHariIni
+    }
+
+    fun getTotalBulanIni(): Int {
+        var totalBulanIni = 0
+
+        val db = this.readableDatabase
+
+        val sdf = SimpleDateFormat("yyyy-MM", Locale.getDefault())
+        val thisMonth = sdf.format(Date())
+
+        val query = "SELECT SUM($KEY_TRANSAKSI_TOTAL) AS total FROM $TABLE_TRANSAKSI WHERE SUBSTR($KEY_TRANSAKSI_TANGGAL, 1, 7) = ?"
+
+        val cursor: Cursor = db.rawQuery(query, arrayOf(thisMonth))
+        if (cursor.moveToFirst()) {
+            totalBulanIni = cursor.getInt(cursor.getColumnIndex("total"))
+        }
+        cursor.close()
+
+        return totalBulanIni
+    }
+
+    fun getJumlahTransaksi(): Int {
+        var jumlahTransaksi = 0
+
+        val db = this.readableDatabase
+
+        val query = "SELECT COUNT($KEY_TRANSAKSI_IDTRANSAKSI) AS jumlah FROM $TABLE_TRANSAKSI"
+
+        val cursor: Cursor = db.rawQuery(query, null)
+        if (cursor.moveToFirst()) {
+            jumlahTransaksi = cursor.getInt(cursor.getColumnIndex("jumlah"))
+        }
+        cursor.close()
+
+        return jumlahTransaksi
     }
 
 }

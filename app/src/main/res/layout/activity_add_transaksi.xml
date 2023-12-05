@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context=".AddTransaksiActivity">
+
+        <EditText
+            android:id="@+id/et_idTransaksi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ID Transaksi"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/et_tanggal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Waktu"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/et_waktu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Waktu"
+            android:inputType="text" />
+
+        <Spinner
+            android:id="@+id/spinner_shift"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"/>
+
+        <EditText
+            android:id="@+id/et_idpengguna"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ID Pengguna"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/et_idpelanggan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ID Pelanggan"
+            android:inputType="text" />
+
+        <Spinner
+            android:id="@+id/spinner_statuspesanan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"/>
+
+        <EditText
+            android:id="@+id/et_kodemeja"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Kode Meja"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/et_namapelanggan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nama Pelanggan"
+            android:inputType="text" />
+
+
+        <EditText
+            android:id="@+id/et_total"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Total"
+            android:inputType="text" />
+
+        <Spinner
+            android:id="@+id/spinner_metodebayar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"/>
+
+        <EditText
+            android:id="@+id/et_totaldiskon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Total Diskon"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/et_idpromosi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ID Promosi"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/btn_addTransaksi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Tambah Transaksi" />
+
+    </LinearLayout>
+</ScrollView>
