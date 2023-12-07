@@ -17,7 +17,7 @@ class MainActivity2 : AppCompatActivity() {
         setContentView(R.layout.activity_main2)
 
         if (!isLoggedIn()) {
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
             return
