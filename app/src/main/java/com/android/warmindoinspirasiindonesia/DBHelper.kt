@@ -71,14 +71,6 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         private val KEY_TRANSAKSI_IDPROMOSI = "idPromosi"
     }
 
-        // warung
-        private val TABLE_WARUNG = "Warung"
-        private val KEY_WARUNG_IDWARUNG = "idwarung"
-        private val KEY_WARUNG_NAMA = "namawarung"
-        private val KEY_WARUNG_LOGO = "logo"
-        private val KEY_WARUNG_GAMBAR = "gambar"
-
-
     override fun onCreate(db: SQLiteDatabase) {
         // users
         val queryUsers = ("CREATE TABLE " + TABLE_USERS + " ("
@@ -607,28 +599,4 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         return jumlahTransaksi
     }
 
-    fun addWarung(idwarung: Int, namawarung: String, logo: Bitmap, gambar: Bitmap) {
-        val objectByteOutputStream = ByteArrayOutputStream()
-        logo.compress(Bitmap.CompressFormat.JPEG, 100, objectByteOutputStream)
-        gambar.compress(Bitmap.CompressFormat.JPEG, 100, objectByteOutputStream)
-        val imageInBytes = objectByteOutputStream.toByteArray()
-
-        val values = ContentValues()
-
-        values.put(KEY_WARUNG_IDWARUNG, idwarung)
-        values.put(KEY_WARUNG_NAMA, namawarung)
-        values.put(KEY_WARUNG_LOGO, imageInBytes)
-        values.put(KEY_WARUNG_GAMBAR, imageInBytes)
-
-        val db = this.writableDatabase
-        val result = db.insert(TABLE_WARUNG, null, values)
-
-        if (result != -1L) {
-            Toast.makeText(context, "Berhasil menambah warung", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(context, "Gagal menambah warung", Toast.LENGTH_SHORT).show()
-        }
-
-        db.close()
-    }
 }

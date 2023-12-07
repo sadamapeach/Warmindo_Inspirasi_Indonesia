@@ -24,7 +24,7 @@
         <!-- android:name=".MainActivity2" -->
         <!-- android:exported="false" /> -->
         <activity
-            android:name=".DashboardActivity2"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".AddTransaksiActivity"
