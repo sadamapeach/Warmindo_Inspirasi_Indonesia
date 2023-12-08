@@ -239,16 +239,7 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
 
         val db = this.writableDatabase
 
-        val result = db.insert(TABLE_AKTVPENGGUNA, null, values)
-
-        if (result != -1L) {
-            db.setTransactionSuccessful()
-            Toast.makeText(context, "Berhasil menambah aktivitas pengguna", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(context, "Gagal menambah aktivitas pengguna", Toast.LENGTH_SHORT).show()
-        }
-
-        db.close()
+        db.insert(TABLE_AKTVPENGGUNA, null, values)
     }
 
 //    private fun saveImageToStorage(bitmap: Bitmap, context: Context): String {
@@ -605,7 +596,7 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         var userId: String? = null
 
         if (cursor.moveToFirst()) {
-            userId = cursor.getString(cursor.getColumnIndex("idPengguna"))
+            userId = cursor.getString(cursor.getColumnIndex(KEY_PENGGUNA_IDPENGGUNA))
         }
 
         cursor.close()

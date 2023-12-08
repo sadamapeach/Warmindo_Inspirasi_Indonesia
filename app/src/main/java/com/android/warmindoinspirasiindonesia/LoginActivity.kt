@@ -34,18 +34,21 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         if (view != null) {
             if (view.id == R.id.btn_login) {
                 val db = DBHelper(this)
-
                 val username = etUsername.text.toString()
-                val password = etPassword.text.toString()
 
+                val password = etPassword.text.toString()
+                val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+                val currentTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+                val aktivitas = "login"
                 val storedHashedPassword = db.getHashedPassword(username)
 
                 if (storedHashedPassword != null) {
                     val passwordMatches = BCrypt.verifyer().verify(password.toCharArray(), storedHashedPassword).verified
 
                     if (passwordMatches) {
+                        val idPengguna = db.getUserId(username)!!.toInt()
+                        db.addAktivitasPengguna(currentDate, currentTime, idPengguna, aktivitas)
                         saveLoginStatus(username)
-
                         val dashboardIntent = Intent(this, MainActivity2::class.java)
                         startActivity(dashboardIntent)
                         finish()
