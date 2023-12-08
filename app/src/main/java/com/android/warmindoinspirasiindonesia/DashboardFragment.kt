@@ -52,6 +52,10 @@ class DashboardFragment : Fragment(), View.OnClickListener {
                     val dataTransaksiIntent = Intent(requireContext(), DataTransaksiActivity::class.java)
                     startActivity(dataTransaksiIntent)
                 }
+                R.id.btn_viewWarung -> {
+                    val dataWarungIntent = Intent(requireContext(), DataWarungActivity::class.java)
+                    startActivity(dataWarungIntent)
+                }
             }
         }
     }
