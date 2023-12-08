@@ -25,8 +25,8 @@ class AddWarungActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var ivGambar: ImageView
     private var thumbnail: Bitmap? = null
     private val PICK_IMAGE_REQUEST = 1
-    private val PICK_IMAGE_LOGO_REQUEST = 2
-    private val PICK_IMAGE_GAMBAR_REQUEST = 3
+    private val PICK_IMAGE_LOGO_REQUEST = 1
+    private val PICK_IMAGE_GAMBAR_REQUEST = 1
     private lateinit var DBHelper: DBHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +56,8 @@ class AddWarungActivity : AppCompatActivity(), View.OnClickListener {
                 openGallery(PICK_IMAGE_LOGO_REQUEST)
             } else if (view.id == R.id.btn_selectImageGambar) {
                 openGallery(PICK_IMAGE_GAMBAR_REQUEST)
+            } else if (view.id == R.id.btn_selectImageLogo) {
+                openGallery(PICK_IMAGE_LOGO_REQUEST)
             } else if (view.id == R.id.btn_add) {
                 tambahkanWarungKeDatabase()
             }
@@ -68,11 +70,10 @@ class AddWarungActivity : AppCompatActivity(), View.OnClickListener {
         val idWarung = etIdWarung.text.toString()
         val namaWarung = etNamaWarung.text.toString()
 
-        if (idWarung.isNotEmpty() && namaWarung.isNotEmpty() && thumbnail != null) {
+        if (idWarung.isNotEmpty() && namaWarung.isNotEmpty()) {
 
             val defaultImageResource = R.drawable.pic_add
             val safeThumbnail = thumbnail ?: BitmapFactory.decodeResource(resources, defaultImageResource)
-
 
             db.addWarung(idWarung, namaWarung, safeThumbnail, safeThumbnail)
             finish()

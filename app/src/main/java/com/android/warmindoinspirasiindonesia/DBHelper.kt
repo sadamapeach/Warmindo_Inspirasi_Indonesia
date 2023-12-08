@@ -15,7 +15,7 @@ import java.util.Locale
 
 class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE_NAME,null,DATABASE_VERSION) {
     companion object {
-        private val DATABASE_VERSION = 6
+        private val DATABASE_VERSION = 7
         private val DATABASE_NAME = "Warmindo"
 
         // users
@@ -135,7 +135,7 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
                 + KEY_WARUNG_IDWARUNG + " TEXT PRIMARY KEY , "
                 + KEY_WARUNG_NAMA + " TEXT, "
                 + KEY_WARUNG_LOGO + " BLOB, "
-                + KEY_WARUNG_GAMBAR + " BLOB," + ")")
+                + KEY_WARUNG_GAMBAR + " BLOB" + ")")
 
         db.execSQL(queryWarung)
     }
@@ -150,6 +150,8 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_AKTVPENGGUNA)
 
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRANSAKSI)
+
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_WARUNG)
         onCreate(db)
     }
 
@@ -602,16 +604,18 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
 
     fun addWarung(idwarung: String, namawarung: String, logo: Bitmap, gambar: Bitmap) {
         val objectByteOutputStream = ByteArrayOutputStream()
+        val objectByteOutputStream2 = ByteArrayOutputStream()
         logo.compress(Bitmap.CompressFormat.JPEG, 100, objectByteOutputStream)
-        gambar.compress(Bitmap.CompressFormat.JPEG, 100, objectByteOutputStream)
-        val imageInBytes = objectByteOutputStream.toByteArray()
+        gambar.compress(Bitmap.CompressFormat.JPEG, 100, objectByteOutputStream2)
+        val gambarInBytes = objectByteOutputStream.toByteArray()
+        val logoInBytes = objectByteOutputStream2.toByteArray()
 
         val values = ContentValues()
 
         values.put(KEY_WARUNG_IDWARUNG, idwarung)
         values.put(KEY_WARUNG_NAMA, namawarung)
-        values.put(KEY_WARUNG_LOGO, imageInBytes)
-        values.put(KEY_WARUNG_GAMBAR, imageInBytes)
+        values.put(KEY_WARUNG_LOGO, logoInBytes)
+        values.put(KEY_WARUNG_GAMBAR, gambarInBytes)
 
         val db = this.writableDatabase
         val result = db.insert(TABLE_WARUNG, null, values)
@@ -620,23 +624,38 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
             Toast.makeText(context, "Berhasil menambah warung", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(context, "Gagal menambah warung", Toast.LENGTH_SHORT).show()
-            db.close()
         }
+        db.close()
     }
 
-        fun getUserId(username: String): String? {
-            val db = this.readableDatabase
-            val query =
-                "SELECT $KEY_PENGGUNA_IDPENGGUNA FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_USERNAME = ?"
-            val cursor = db.rawQuery(query, arrayOf(username))
-            var userId: String? = null
+    fun getUserId(username: String): String? {
+        val db = this.readableDatabase
+        val query =
+            "SELECT $KEY_PENGGUNA_IDPENGGUNA FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_USERNAME = ?"
+        val cursor = db.rawQuery(query, arrayOf(username))
+        var userId: String? = null
 
-            if (cursor.moveToFirst()) {
-                userId = cursor.getString(cursor.getColumnIndex(KEY_PENGGUNA_IDPENGGUNA))
-            }
-
-            cursor.close()
-            return userId
+        if (cursor.moveToFirst()) {
+            userId = cursor.getString(cursor.getColumnIndex(KEY_PENGGUNA_IDPENGGUNA))
         }
 
+        cursor.close()
+        return userId
+    }
+
+    fun getJumlahWarung(): Int {
+        var jumlahWarung = 0
+
+        val db = this.readableDatabase
+
+        val query = "SELECT COUNT($KEY_WARUNG_IDWARUNG) AS jumlah FROM $TABLE_WARUNG"
+
+        val cursor: Cursor = db.rawQuery(query, null)
+        if (cursor.moveToFirst()) {
+            jumlahWarung = cursor.getInt(cursor.getColumnIndex("jumlah"))
+        }
+        cursor.close()
+
+        return jumlahWarung
+    }
 }
