@@ -589,18 +589,40 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         return jumlahTransaksi
     }
 
-    fun getUserId(username: String): String? {
-        val db = this.readableDatabase
-        val query = "SELECT $KEY_PENGGUNA_IDPENGGUNA FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_USERNAME = ?"
-        val cursor = db.rawQuery(query, arrayOf(username))
-        var userId: String? = null
 
-        if (cursor.moveToFirst()) {
-            userId = cursor.getString(cursor.getColumnIndex(KEY_PENGGUNA_IDPENGGUNA))
+    fun addWarung(idwarung: Int, namawarung: String, logo: Bitmap, gambar: Bitmap) {
+        val objectByteOutputStream = ByteArrayOutputStream()
+        logo.compress(Bitmap.CompressFormat.JPEG, 100, objectByteOutputStream)
+        gambar.compress(Bitmap.CompressFormat.JPEG, 100, objectByteOutputStream)
+        val imageInBytes = objectByteOutputStream.toByteArray()
+
+        val values = ContentValues()
+        values.put(KEY_WARUNG_IDWARUNG, idwarung)
+        values.put(KEY_WARUNG_NAMA, namawarung)
+        values.put(KEY_WARUNG_LOGO, imageInBytes)
+        values.put(KEY_WARUNG_GAMBAR, imageInBytes)
+
+        val db = this.writableDatabase
+        val result = db.insert(TABLE_WARUNG, null, values)
+
+        if (result != -1L) {
+            Toast.makeText(context, "Berhasil menambah warung", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Gagal menambah warung", Toast.LENGTH_SHORT).show()
+            db.close()
         }
 
-        cursor.close()
-        return userId
-    }
+        fun getUserId(username: String): String? {
+            val db = this.readableDatabase
+            val query = "SELECT $KEY_PENGGUNA_IDPENGGUNA FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_USERNAME = ?"
+            val cursor = db.rawQuery(query, arrayOf(username))
+            var userId: String? = null
 
+            if (cursor.moveToFirst()) {
+                userId = cursor.getString(cursor.getColumnIndex(KEY_PENGGUNA_IDPENGGUNA))
+            }
+
+            cursor.close()
+            return userId
+        }
 }
