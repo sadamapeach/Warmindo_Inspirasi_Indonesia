@@ -15,7 +15,7 @@ import java.util.Locale
 
 class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE_NAME,null,DATABASE_VERSION) {
     companion object {
-        private val DATABASE_VERSION = 4
+        private val DATABASE_VERSION = 6
         private val DATABASE_NAME = "Warmindo"
 
         // users
@@ -622,6 +622,7 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
             Toast.makeText(context, "Gagal menambah warung", Toast.LENGTH_SHORT).show()
             db.close()
         }
+    }
 
         fun getUserId(username: String): String? {
             val db = this.readableDatabase
@@ -637,5 +638,5 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
             cursor.close()
             return userId
         }
-    }
+
 }
