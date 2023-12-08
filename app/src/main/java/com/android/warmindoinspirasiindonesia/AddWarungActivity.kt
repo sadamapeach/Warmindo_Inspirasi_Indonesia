@@ -74,7 +74,7 @@ class AddWarungActivity : AppCompatActivity(), View.OnClickListener {
             val safeThumbnail = thumbnail ?: BitmapFactory.decodeResource(resources, defaultImageResource)
 
 
-            db.addWarung(idWarung.toInt(), namaWarung, safeThumbnail, safeThumbnail)
+            db.addWarung(idWarung, namaWarung, safeThumbnail, safeThumbnail)
             finish()
         } else {
 

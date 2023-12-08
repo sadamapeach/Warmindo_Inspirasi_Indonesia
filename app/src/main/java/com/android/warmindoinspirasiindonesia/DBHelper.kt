@@ -21,7 +21,7 @@ import java.util.Locale
 
 class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE_NAME,null,DATABASE_VERSION) {
     companion object {
-        private val DATABASE_VERSION = 4
+        private val DATABASE_VERSION = 5
         private val DATABASE_NAME = "Warmindo"
 
         // users
@@ -136,6 +136,15 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
                         + KEY_TRANSAKSI_IDPROMOSI + " INTEGER" + ")")
 
         db.execSQL(queryTransaksi)
+
+        // warung
+        val queryWarung = ("CREATE TABLE " + TABLE_WARUNG + " ("
+                + KEY_WARUNG_IDWARUNG + " TEXT PRIMARY KEY , "
+                + KEY_WARUNG_NAMA + " TEXT, "
+                + KEY_WARUNG_LOGO + " BLOB, "
+                + KEY_WARUNG_GAMBAR + " BLOB," + ")")
+
+        db.execSQL(queryWarung)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, p1: Int, p2: Int) {
@@ -607,7 +616,7 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         return jumlahTransaksi
     }
 
-    fun addWarung(idwarung: Int, namawarung: String, logo: Bitmap, gambar: Bitmap) {
+    fun addWarung(idwarung: String, namawarung: String, logo: Bitmap, gambar: Bitmap) {
         val objectByteOutputStream = ByteArrayOutputStream()
         logo.compress(Bitmap.CompressFormat.JPEG, 100, objectByteOutputStream)
         gambar.compress(Bitmap.CompressFormat.JPEG, 100, objectByteOutputStream)

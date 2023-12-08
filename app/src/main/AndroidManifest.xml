@@ -27,6 +27,9 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
+            android:name=".AddWarungActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddTransaksiActivity"
             android:exported="false" />
         <activity
