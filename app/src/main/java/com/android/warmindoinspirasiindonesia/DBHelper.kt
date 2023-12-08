@@ -112,19 +112,19 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
 
         // transaksi
         val queryTransaksi = ("CREATE TABLE " + TABLE_TRANSAKSI + " ("
-                        + KEY_TRANSAKSI_IDTRANSAKSI + " TEXT PRIMARY KEY , "
-                        + KEY_TRANSAKSI_TANGGAL + " TEXT, "
-                        + KEY_TRANSAKSI_WAKTU + " TEXT, "
-                        + KEY_TRANSAKSI_SHIFT + " INTEGER, "
-                        + KEY_TRANSAKSI_IDPENGGUNA + " INTEGER, "
-                        + KEY_TRANSAKSI_IDPELANGGAN + " INTEGER, "
-                        + KEY_TRANSAKSI_STATUS + " TEXT, "
-                        + KEY_TRANSAKSI_KODEMEJA + " TEXT, "
-                        + KEY_TRANSAKSI_NAMAPELANGGAN + " TEXT, "
-                        + KEY_TRANSAKSI_TOTAL + " INTEGER, "
-                        + KEY_TRANSAKSI_METODEBAYAR + " TEXT, "
-                        + KEY_TRANSAKSI_TOTALDISKON + " INTEGER, "
-                        + KEY_TRANSAKSI_IDPROMOSI + " INTEGER" + ")")
+                + KEY_TRANSAKSI_IDTRANSAKSI + " TEXT PRIMARY KEY , "
+                + KEY_TRANSAKSI_TANGGAL + " TEXT, "
+                + KEY_TRANSAKSI_WAKTU + " TEXT, "
+                + KEY_TRANSAKSI_SHIFT + " INTEGER, "
+                + KEY_TRANSAKSI_IDPENGGUNA + " INTEGER, "
+                + KEY_TRANSAKSI_IDPELANGGAN + " INTEGER, "
+                + KEY_TRANSAKSI_STATUS + " TEXT, "
+                + KEY_TRANSAKSI_KODEMEJA + " TEXT, "
+                + KEY_TRANSAKSI_NAMAPELANGGAN + " TEXT, "
+                + KEY_TRANSAKSI_TOTAL + " INTEGER, "
+                + KEY_TRANSAKSI_METODEBAYAR + " TEXT, "
+                + KEY_TRANSAKSI_TOTALDISKON + " INTEGER, "
+                + KEY_TRANSAKSI_IDPROMOSI + " INTEGER" + ")")
 
         db.execSQL(queryTransaksi)
     }
@@ -142,7 +142,7 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         onCreate(db)
     }
 
-    fun addUser(username : String, password : String ){
+    fun addUser(username: String, password: String) {
         val values = ContentValues()
 
         values.put(KEY_PENGGUNA_USERNAME, username)
@@ -184,7 +184,8 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
 
     fun getHashedPassword(username: String): String? {
         val db = this.readableDatabase
-        val query = "SELECT $KEY_PENGGUNA_PASSWORD FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_USERNAME = ?"
+        val query =
+            "SELECT $KEY_PENGGUNA_PASSWORD FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_USERNAME = ?"
         val cursor: Cursor = db.rawQuery(query, arrayOf(username))
         var hashedPassword: String? = null
 
@@ -199,7 +200,8 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
 
     fun checkCredential(username: String, password: String): Boolean {
         val db = this.readableDatabase
-        val query = "SELECT * FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_USERNAME = ? AND $KEY_PENGGUNA_PASSWORD = ?"
+        val query =
+            "SELECT * FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_USERNAME = ? AND $KEY_PENGGUNA_PASSWORD = ?"
         val cursor = db.rawQuery(query, arrayOf(username, password))
 
         val userExists = cursor.count > 0
@@ -210,7 +212,7 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         return userExists
     }
 
-    fun addRole(idRole : Int, role : String, status : String ){
+    fun addRole(idRole: Int, role: String, status: String) {
         val values = ContentValues()
 
         values.put(KEY_ROLE_IDROLE, idRole)
@@ -268,7 +270,14 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
 //        return imageUri?.toString() ?: ""
 //    }
 
-    fun addPengguna(username: String, password: String, nama: String, idRole: Int, status: String, foto: Bitmap) {
+    fun addPengguna(
+        username: String,
+        password: String,
+        nama: String,
+        idRole: Int,
+        status: String,
+        foto: Bitmap
+    ) {
         val objectByteOutputStream = ByteArrayOutputStream()
         foto.compress(Bitmap.CompressFormat.JPEG, 100, objectByteOutputStream)
         val imageInBytes = objectByteOutputStream.toByteArray()
@@ -321,7 +330,8 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
     }
 
     fun getAllPengguna(): Cursor {
-        val query = "SELECT ${TABLE_PENGGUNA}.*, ${TABLE_ROLE}.role FROM ${TABLE_PENGGUNA} INNER JOIN ${TABLE_ROLE} ON ${TABLE_PENGGUNA}.idRole = ${TABLE_ROLE}.idRole"
+        val query =
+            "SELECT ${TABLE_PENGGUNA}.*, ${TABLE_ROLE}.role FROM ${TABLE_PENGGUNA} INNER JOIN ${TABLE_ROLE} ON ${TABLE_PENGGUNA}.idRole = ${TABLE_ROLE}.idRole"
         val db = this.readableDatabase
         return db.rawQuery(query, null)
     }
@@ -368,7 +378,7 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         return imageData
     }
 
-//    fun getFotoPengguna(idPengguna: String): ByteArray? {
+    //    fun getFotoPengguna(idPengguna: String): ByteArray? {
 //        val db = this.readableDatabase
 //        val query = "SELECT $KEY_PENGGUNA_FOTO FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_IDPENGGUNA = $idPengguna"
 //        val cursor: Cursor = db.rawQuery(query, null)
@@ -385,7 +395,8 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
 //    }
     fun getFotoPengguna(idPengguna: String): ByteArray? {
         val db = this.readableDatabase
-        val query = "SELECT $KEY_PENGGUNA_FOTO FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_IDPENGGUNA = ?"
+        val query =
+            "SELECT $KEY_PENGGUNA_FOTO FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_IDPENGGUNA = ?"
         val cursor: Cursor? = db.rawQuery(query, arrayOf(idPengguna))
 
         var foto: ByteArray? = null
@@ -399,7 +410,14 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
 
         return foto
     }
-    fun updatePengguna(id: String, nama: String, status: String, idRole: Int, foto: Bitmap): Boolean {
+
+    fun updatePengguna(
+        id: String,
+        nama: String,
+        status: String,
+        idRole: Int,
+        foto: Bitmap
+    ): Boolean {
         val objectByteOutputStream = ByteArrayOutputStream()
         foto.compress(Bitmap.CompressFormat.JPEG, 100, objectByteOutputStream)
         val imageInBytes = objectByteOutputStream.toByteArray()
@@ -414,7 +432,12 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         try {
             db.beginTransaction()
 
-            val result = db.update(TABLE_PENGGUNA, contentValues, "$KEY_PENGGUNA_IDPENGGUNA = ?", arrayOf(id))
+            val result = db.update(
+                TABLE_PENGGUNA,
+                contentValues,
+                "$KEY_PENGGUNA_IDPENGGUNA = ?",
+                arrayOf(id)
+            )
 
             if (result > 0) {
                 db.setTransactionSuccessful()
@@ -463,7 +486,8 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
 
         try {
             db.beginTransaction()
-            val result = db.update(TABLE_ROLE, contentValues, "$KEY_ROLE_IDROLE = ?", arrayOf(idRole))
+            val result =
+                db.update(TABLE_ROLE, contentValues, "$KEY_ROLE_IDROLE = ?", arrayOf(idRole))
 
             if (result > 0) {
                 db.setTransactionSuccessful()
@@ -543,7 +567,8 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val todayDate = sdf.format(Date())
 
-        val query = "SELECT SUM($KEY_TRANSAKSI_TOTAL) AS total FROM $TABLE_TRANSAKSI WHERE $KEY_TRANSAKSI_TANGGAL = ?"
+        val query =
+            "SELECT SUM($KEY_TRANSAKSI_TOTAL) AS total FROM $TABLE_TRANSAKSI WHERE $KEY_TRANSAKSI_TANGGAL = ?"
 
         val cursor: Cursor = db.rawQuery(query, arrayOf(todayDate))
         if (cursor.moveToFirst()) {
@@ -562,7 +587,8 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         val sdf = SimpleDateFormat("yyyy-MM", Locale.getDefault())
         val thisMonth = sdf.format(Date())
 
-        val query = "SELECT SUM($KEY_TRANSAKSI_TOTAL) AS total FROM $TABLE_TRANSAKSI WHERE SUBSTR($KEY_TRANSAKSI_TANGGAL, 1, 7) = ?"
+        val query =
+            "SELECT SUM($KEY_TRANSAKSI_TOTAL) AS total FROM $TABLE_TRANSAKSI WHERE SUBSTR($KEY_TRANSAKSI_TANGGAL, 1, 7) = ?"
 
         val cursor: Cursor = db.rawQuery(query, arrayOf(thisMonth))
         if (cursor.moveToFirst()) {
@@ -590,39 +616,46 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
     }
 
 
-    fun addWarung(idwarung: Int, namawarung: String, logo: Bitmap, gambar: Bitmap) {
-        val objectByteOutputStream = ByteArrayOutputStream()
-        logo.compress(Bitmap.CompressFormat.JPEG, 100, objectByteOutputStream)
-        gambar.compress(Bitmap.CompressFormat.JPEG, 100, objectByteOutputStream)
-        val imageInBytes = objectByteOutputStream.toByteArray()
+//    fun addWarung(idwarung: Int, namawarung: String, logo: Bitmap, gambar: Bitmap) {
+//        val objectByteOutputStream = ByteArrayOutputStream()
+//        logo.compress(Bitmap.CompressFormat.JPEG, 100, objectByteOutputStream)
+//        gambar.compress(Bitmap.CompressFormat.JPEG, 100, objectByteOutputStream)
+//        val imageInBytes = objectByteOutputStream.toByteArray()
+//
+//        val values = ContentValues()
+//        values.put(KEY_WARUNG_IDWARUNG, idwarung)
+//        values.put(KEY_WARUNG_NAMA, namawarung)
+//        values.put(KEY_WARUNG_LOGO, imageInBytes)
+//        values.put(KEY_WARUNG_GAMBAR, imageInBytes)
+//
+//        val db = this.writableDatabase
+//        val result = db.insert(TABLE_WARUNG, null, values)
+//
+//        if (result != -1L) {
+//            Toast.makeText(context, "Berhasil menambah warung", Toast.LENGTH_SHORT).show()
+//        } else {
+//            Toast.makeText(context, "Gagal menambah warung", Toast.LENGTH_SHORT).show()
+//            db.close()
+//        }
+//    }
 
-        val values = ContentValues()
-        values.put(KEY_WARUNG_IDWARUNG, idwarung)
-        values.put(KEY_WARUNG_NAMA, namawarung)
-        values.put(KEY_WARUNG_LOGO, imageInBytes)
-        values.put(KEY_WARUNG_GAMBAR, imageInBytes)
+    fun getUserId(username: String): String? {
+        val db = this.readableDatabase
+        val query =
+            "SELECT $KEY_PENGGUNA_IDPENGGUNA FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_USERNAME = ?"
+        val cursor = db.rawQuery(query, arrayOf(username))
+        var userId: String? = null
 
-        val db = this.writableDatabase
-        val result = db.insert(TABLE_WARUNG, null, values)
-
-        if (result != -1L) {
-            Toast.makeText(context, "Berhasil menambah warung", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(context, "Gagal menambah warung", Toast.LENGTH_SHORT).show()
-            db.close()
+        if (cursor.moveToFirst()) {
+            userId = cursor.getString(cursor.getColumnIndex(KEY_PENGGUNA_IDPENGGUNA))
         }
 
-        fun getUserId(username: String): String? {
-            val db = this.readableDatabase
-            val query = "SELECT $KEY_PENGGUNA_IDPENGGUNA FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_USERNAME = ?"
-            val cursor = db.rawQuery(query, arrayOf(username))
-            var userId: String? = null
+        cursor.close()
+        return userId
+    }
 
-            if (cursor.moveToFirst()) {
-                userId = cursor.getString(cursor.getColumnIndex(KEY_PENGGUNA_IDPENGGUNA))
-            }
+//    fun addWarung(toInt: Int, namaWarung: String, safeThumbnail: Bitmap?, safeThumbnail1: Bitmap?) {
+//
+//    }
 
-            cursor.close()
-            return userId
-        }
 }

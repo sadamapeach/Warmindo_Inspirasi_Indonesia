@@ -18,6 +18,7 @@ import android.widget.Toast
 import android.os.Build
 import android.util.Size
 import com.android.warmindoinspirasiindonesia.databinding.ActivityAddPenggunaBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.IOException
 
 class AddPenggunaActivity : AppCompatActivity(), View.OnClickListener {
@@ -27,7 +28,7 @@ class AddPenggunaActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var spinnerRole: Spinner
     private lateinit var spinnerStatus: Spinner
     private lateinit var btnAdd: Button
-    private lateinit var btnSelectImage: Button
+    private lateinit var btnSelectImage: FloatingActionButton
     private lateinit var ivFoto: ImageView
     private var thumbnail: Bitmap? = null
     private val PICK_IMAGE_REQUEST = 1

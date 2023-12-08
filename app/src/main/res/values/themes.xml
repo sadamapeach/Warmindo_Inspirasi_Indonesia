@@ -6,6 +6,7 @@
         <item name="color">@color/coklat</item>
         <item name="colorPrimary">@color/kuning</item>
         <item name="colorOnSecondary">@color/abu</item>
+        <item name="colorContainer">@color/semi_kuning</item>
     </style>
 
     <style name="Theme.WarmindoInspirasiIndonesia" parent="Base.Theme.WarmindoInspirasiIndonesia" />
@@ -21,5 +22,20 @@
     <style name="Text_Login">
         <item name="fontFamily">@font/poppins_regular</item>
         <item name="android:textSize">15sp</item>
+    </style>
+    <style name="Header">
+        <item name="fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/coklat</item>
+    </style>
+    <style name="Sub_Header">
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="Spinner">
+        <item name="android:textColor">@color/kuning</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
     </style>
 </resources>

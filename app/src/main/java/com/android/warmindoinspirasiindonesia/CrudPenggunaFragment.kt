@@ -12,9 +12,10 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CrudPenggunaFragment : Fragment(), View.OnClickListener {
-    private lateinit var btnAdd: Button
+    private lateinit var btnAdd: FloatingActionButton
     private lateinit var recyclerView: RecyclerView
     private var idPengguna = ArrayList<String>()
     private var namaPengguna = ArrayList<String>()

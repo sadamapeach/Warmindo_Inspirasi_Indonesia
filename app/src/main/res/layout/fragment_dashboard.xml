@@ -6,216 +6,254 @@
     android:layout_height="match_parent"
     tools:context=".DashboardFragment">
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewDashboard"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".DashboardActivity">
+            android:layout_height="125dp"
+            android:backgroundTint="@color/kuning"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="10dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true">
 
-            <!--        <LinearLayout-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            android:orientation="vertical"-->
-            <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--            app:layout_constraintTop_toTopOf="parent">-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <!--        </LinearLayout>-->
+                <ImageView
+                    android:id="@+id/imageView11"
+                    android:layout_width="345dp"
+                    android:layout_height="157dp"
+                    android:src="@drawable/food11"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_yourDashboard"
-                android:layout_width="200dp"
-                android:layout_height="47dp"
-                android:layout_marginStart="28dp"
-                android:layout_marginTop="40dp"
-                android:text="Your Dashboard"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/tv_welcome"
+                    style="@style/Sub_Header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="42dp"
+                    android:layout_marginTop="50dp"
+                    android:text="Selamat datang di"
+                    app:layout_constraintStart_toStartOf="@+id/imageView11"
+                    app:layout_constraintTop_toTopOf="@+id/imageView11" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView2"
-                android:layout_width="391dp"
-                android:layout_height="220dp"
-                android:layout_margin="10dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="10dp"
-                app:cardMaxElevation="12dp"
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_yourDashboard">
+                <TextView
+                    android:id="@+id/tv_warmindo"
+                    style="@style/Header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Warmindo Inspirasi Indonesia"
+                    app:layout_constraintStart_toStartOf="@+id/tv_welcome"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_welcome" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView2"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="125dp"
+            app:cardBackgroundColor="@color/semi_kuning"
+            app:cardCornerRadius="10dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/tv_warung"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="52dp"
-                        android:layout_marginTop="16dp"
-                        android:text="Warung"
-                        android:textSize="20sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/tv_transaksi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="44dp"
-                        android:text="Transaksi"
-                        android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/imagebag1"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/eat"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/tv_countWarung"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="72dp"
-                        android:layout_marginTop="16dp"
-                        android:text="10"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_warung" />
+                <TextView
+                    android:id="@+id/tv_warung"
+                    style="@style/Header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="17dp"
+                    android:text="Warung"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/tv_countTransaksi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="72dp"
-                        android:text="150"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_transaksi" />
+                <TextView
+                    android:id="@+id/tv_countWarung"
+                    style="@style/Sub_Header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/tv_warung"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_warung" />
 
-                    <Button
-                        android:id="@+id/btn_viewWarung"
-                        android:layout_width="89dp"
-                        android:layout_height="33dp"
-                        android:layout_marginStart="40dp"
-                        android:text="View"
-                        android:textSize="12dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_countWarung"
-                        app:layout_constraintVertical_bias="0.509" />
+                <Button
+                    android:id="@+id/btn_viewWarung"
+                    style="@style/Text_Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:text="View"
+                    android:textSize="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/tv_countWarung"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_countWarung" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
-                    <Button
-                        android:id="@+id/btn_viewTransaksi"
-                        android:layout_width="95dp"
-                        android:layout_height="32dp"
-                        android:layout_marginEnd="36dp"
-                        android:text="View"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView3"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:cardBackgroundColor="@color/semi_kuning"
+            app:cardCornerRadius="10dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
-                        android:textSize="12dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_countTransaksi" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView3"
-                android:layout_width="391dp"
-                android:layout_height="220dp"
-                android:layout_margin="10dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="10dp"
-                app:cardMaxElevation="12dp"
-                app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView2">
+                <ImageView
+                    android:id="@+id/imageSoto"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/eat_2"
+                    android:layout_marginLeft="7dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tv_transaksi"
+                    style="@style/Header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="40dp"
+                    android:text="Transaksi"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toEndOf="@+id/imageSoto"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/tv_pendapatan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="32dp"
-                        android:layout_marginTop="24dp"
-                        android:text="Pendapatan"
-                        android:textSize="20sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/tv_countTransaksi"
+                    style="@style/Sub_Header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/tv_transaksi"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_transaksi" />
 
-                    <TextView
-                        android:id="@+id/tv_hariIni"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="32dp"
-                        android:layout_marginTop="24dp"
-                        android:text="Hari Ini"
-                        android:textSize="20sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_pendapatan" />
+                <Button
+                    android:id="@+id/btn_viewTransaksi"
+                    style="@style/Text_Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:text="View"
+                    android:textSize="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/tv_countTransaksi"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_countTransaksi" />
 
-                    <TextView
-                        android:id="@+id/tv_incomeHari"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="36dp"
-                        android:layout_marginTop="32dp"
-                        android:text="Rp1000000"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_hariIni" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
-                    <TextView
-                        android:id="@+id/tv_bulanIni"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="72dp"
-                        android:layout_marginEnd="56dp"
-                        android:text="Bulan Ini"
-                        android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.841"
-                        app:layout_constraintStart_toEndOf="@+id/tv_pendapatan"
-                        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardPendapatan"
+            android:layout_width="match_parent"
+            android:layout_height="208dp"
+            app:cardBackgroundColor="@color/semi_kuning"
+            app:cardCornerRadius="10dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintTop_toBottomOf="@+id/cardView3">
 
-                    <TextView
-                        android:id="@+id/tv_incomeBulan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="28dp"
-                        android:layout_marginEnd="28dp"
-                        android:text="Rp1000000"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.831"
-                        app:layout_constraintStart_toEndOf="@+id/tv_pendapatan"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_bulanIni" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/imageMoney"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/money"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/recent_trans"
-                android:layout_width="200dp"
-                android:layout_height="47dp"
-                android:layout_marginStart="28dp"
-                android:layout_marginBottom="116dp"
-                android:text="Recent Transaction"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+                <TextView
+                    android:id="@+id/tv_pendapatan"
+                    style="@style/Header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pendapatan"
+                    android:textSize="20dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginLeft="30dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_hariIni"
+                    style="@style/Header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hari Ini"
+                    app:layout_constraintStart_toStartOf="@+id/tv_pendapatan"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_pendapatan" />
+
+                <TextView
+                    android:id="@+id/tv_incomeHari"
+                    style="@style/Sub_Header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/tv_hariIni"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_hariIni" />
+
+                <TextView
+                    android:id="@+id/tv_bulanIni"
+                    style="@style/Header"
+                    android:layout_marginTop="6dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bulan Ini"
+                    app:layout_constraintStart_toStartOf="@+id/tv_incomeHari"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_incomeHari" />
+
+                <TextView
+                    android:id="@+id/tv_incomeBulan"
+                    style="@style/Sub_Header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/tv_bulanIni"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_bulanIni" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
