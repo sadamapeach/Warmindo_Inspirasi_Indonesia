@@ -494,8 +494,26 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         }
     }
 
-    fun deleteRole(idRole: Int) {
-        // logic delete role
+    fun deleteRole(idRole: String) {
+        val db = this.writableDatabase
+
+        try {
+            db.beginTransaction()
+
+            val result = db.delete(TABLE_ROLE, "idRole=?", arrayOf(idRole))
+
+            if (result > 0) {
+                db.setTransactionSuccessful()
+                Toast.makeText(context, "Berhasil menghapus role", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Gagal menghapus role", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            db.endTransaction()
+            db.close()
+        }
     }
 
     fun addTransaksi(

@@ -1,11 +1,11 @@
 package com.android.warmindoinspirasiindonesia
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +36,34 @@ class RoleListAdapter(context: Context, idRole: ArrayList<String>, role: ArrayLi
             intent.putExtra("status", status[position])
             context.startActivity(intent)
         }
+
+        holder.btnDelete.setOnClickListener {
+            confirmDialog(holder, position)
+        }
+    }
+
+    private fun confirmDialog(holder: MyViewHolder, position: Int) {
+        val builder = AlertDialog.Builder(holder.itemView.context)
+        builder.setTitle("Konfirmasi Penghapusan")
+        builder.setMessage("Apakah Anda yakin ingin menghapus ${holder.tvRole.text}?")
+
+        builder.setPositiveButton("Yes") { _, _ ->
+            val db = DBHelper(holder.itemView.context)
+            db.deleteRole(idRole[position])
+
+            idRole.removeAt(position)
+            role.removeAt(position)
+            status.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, itemCount)
+        }
+
+        builder.setNegativeButton("No") { _, _ ->
+            // Do nothing if "No" is clicked
+        }
+
+        val dialog = builder.create()
+        dialog.show()
     }
 
     override fun getItemCount(): Int {
@@ -47,5 +75,6 @@ class RoleListAdapter(context: Context, idRole: ArrayList<String>, role: ArrayLi
         var tvRole: TextView = itemView.findViewById(R.id.tvRole)
         var tvStatus: TextView = itemView.findViewById(R.id.tvStatus)
         var btnEdit: ImageView = itemView.findViewById(R.id.btnEdit)
+        var btnDelete: ImageView = itemView.findViewById(R.id.btnDelete)
     }
 }
