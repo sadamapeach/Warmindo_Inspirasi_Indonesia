@@ -7,14 +7,8 @@ import android.database.sqlite.SQLiteDatabase
 
 import android.database.sqlite.SQLiteOpenHelper
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.os.Environment
-import android.provider.MediaStore
 import android.widget.Toast
 import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -606,7 +600,7 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         return jumlahTransaksi
     }
 
-    fun addWarung(idwarung: Int, namawarung: String, logo: Bitmap, gambar: Bitmap) {
+    fun addWarung(idwarung: String, namawarung: String, logo: Bitmap, gambar: Bitmap) {
         val objectByteOutputStream = ByteArrayOutputStream()
         logo.compress(Bitmap.CompressFormat.JPEG, 100, objectByteOutputStream)
         gambar.compress(Bitmap.CompressFormat.JPEG, 100, objectByteOutputStream)
@@ -631,7 +625,8 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
 
         fun getUserId(username: String): String? {
             val db = this.readableDatabase
-            val query = "SELECT $KEY_PENGGUNA_IDPENGGUNA FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_USERNAME = ?"
+            val query =
+                "SELECT $KEY_PENGGUNA_IDPENGGUNA FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_USERNAME = ?"
             val cursor = db.rawQuery(query, arrayOf(username))
             var userId: String? = null
 
@@ -642,4 +637,5 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
             cursor.close()
             return userId
         }
+    }
 }
