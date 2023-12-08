@@ -16,7 +16,7 @@ class LogoutActivity : AppCompatActivity() {
 
         clearLoginInfo()
 
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
     }
@@ -25,8 +25,19 @@ class LogoutActivity : AppCompatActivity() {
         val sharedPreferences: SharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
 
-        editor.clear()
+        val username: String? = sharedPreferences.getString("username", "")
 
+        if (!username.isNullOrEmpty()) {
+            val db = DBHelper(this)
+            val idPengguna = db.getUserId(username)!!.toInt()
+            val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+            val currentTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+            val aktivitas = "logout"
+            db.addAktivitasPengguna(currentDate, currentTime, idPengguna, aktivitas)
+        }
+
+        editor.clear()
         editor.apply()
     }
+
 }
