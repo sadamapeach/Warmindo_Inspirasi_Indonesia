@@ -16,6 +16,9 @@
         android:theme="@style/Theme.WarmindoInspirasiIndonesia"
         tools:targetApi="31">
         <activity
+            android:name=".DataWarungActivity"
+            android:exported="false" />
+        <activity
             android:name=".LogoutActivity"
             android:exported="false" />
         <activity
@@ -25,6 +28,9 @@
         <!-- android:exported="false" /> -->
         <activity
             android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddWarungActivity"
             android:exported="false" />
         <activity
             android:name=".AddTransaksiActivity"

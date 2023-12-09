@@ -19,6 +19,7 @@ class DashboardFragment : Fragment(), View.OnClickListener {
     private lateinit var tvIncomeBulan: TextView
     private lateinit var tvIncomeHari: TextView
     private lateinit var tvCountTransaksi: TextView
+    private lateinit var tvCountWarung: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +30,7 @@ class DashboardFragment : Fragment(), View.OnClickListener {
         tvIncomeBulan = view.findViewById(R.id.tv_incomeBulan)
         tvIncomeHari = view.findViewById(R.id.tv_incomeHari)
         tvCountTransaksi = view.findViewById(R.id.tv_countTransaksi)
+        tvCountWarung = view.findViewById(R.id.tv_countWarung)
         btnViewTransaksi = view.findViewById(R.id.btn_viewTransaksi)
         btnViewWarung = view.findViewById(R.id.btn_viewWarung)
 
@@ -38,6 +40,7 @@ class DashboardFragment : Fragment(), View.OnClickListener {
         showTotalHariIni()
         showTotalBulanIni()
         showJumlahTransaksi()
+        showJumlahWarung()
 
         return view
     }
@@ -48,6 +51,10 @@ class DashboardFragment : Fragment(), View.OnClickListener {
                 R.id.btn_viewTransaksi -> {
                     val dataTransaksiIntent = Intent(requireContext(), DataTransaksiActivity::class.java)
                     startActivity(dataTransaksiIntent)
+                }
+                R.id.btn_viewWarung -> {
+                    val dataWarungIntent = Intent(requireContext(), DataWarungActivity::class.java)
+                    startActivity(dataWarungIntent)
                 }
             }
         }
@@ -71,6 +78,13 @@ class DashboardFragment : Fragment(), View.OnClickListener {
         val jumlahTransaksi = dbHelper.getJumlahTransaksi()
 
         tvCountTransaksi.text = "$jumlahTransaksi"
+    }
+
+    private fun showJumlahWarung() {
+        val dbHelper = DBHelper(requireContext())
+        val jumlahWarung = dbHelper.getJumlahWarung()
+
+        tvCountWarung.text = "$jumlahWarung"
     }
 
 }

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 class SettingsFragment : Fragment(), View.OnClickListener {
     private lateinit var btnLogout: Button
     private lateinit var btnTransaksi: Button
+    private lateinit var btnWarung: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,9 +25,11 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
         btnTransaksi = view.findViewById(R.id.btn_transaksi)
         btnLogout = view.findViewById(R.id.btn_logout)
+        btnWarung = view.findViewById(R.id.btn_warung)
 
         btnTransaksi.setOnClickListener(this)
         btnLogout.setOnClickListener(this)
+        btnWarung.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
@@ -39,6 +42,10 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 R.id.btn_transaksi -> {
                     val addTransaksiActivity = Intent(requireContext(), AddTransaksiActivity::class.java)
                     startActivity(addTransaksiActivity)
+                }
+                R.id.btn_warung -> {
+                    val addWarungActivity = Intent(requireContext(), AddWarungActivity::class.java)
+                    startActivity(addWarungActivity)
                 }
             }
         }
