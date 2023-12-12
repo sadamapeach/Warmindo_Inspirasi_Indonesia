@@ -24,9 +24,8 @@ class AddWarungActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var ivLogo: ImageView
     private lateinit var ivGambar: ImageView
     private var thumbnail: Bitmap? = null
-    private val PICK_IMAGE_REQUEST = 1
     private val PICK_IMAGE_LOGO_REQUEST = 1
-    private val PICK_IMAGE_GAMBAR_REQUEST = 1
+    private val PICK_IMAGE_GAMBAR_REQUEST = 2
     private lateinit var DBHelper: DBHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {

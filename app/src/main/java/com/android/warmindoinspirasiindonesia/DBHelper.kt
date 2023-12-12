@@ -676,4 +676,16 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
 
         return jumlahWarung
     }
+
+    fun getFilteredTransactions(selectedDate: Date, selectedShift: String): Cursor {
+        val db = this.readableDatabase
+
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val dateString = dateFormat.format(selectedDate)
+
+        val query = "SELECT * FROM $TABLE_TRANSAKSI " +
+                "WHERE $KEY_TRANSAKSI_TANGGAL = '$dateString' AND $KEY_TRANSAKSI_SHIFT = '$selectedShift'"
+
+        return db.rawQuery(query, null)
+    }
 }
