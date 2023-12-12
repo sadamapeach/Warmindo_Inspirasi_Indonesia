@@ -677,6 +677,26 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         return jumlahWarung
     }
 
+    fun getAllWarung(): Cursor {
+        val query = "SELECT * FROM ${TABLE_WARUNG}"
+        val db = this.readableDatabase
+        return db.rawQuery(query, null)
+    }
+    fun getAllLogoWarung(idWarung: String): ByteArray? {
+        val db = this.readableDatabase
+        var imageData: ByteArray? = null
+
+        val query = "SELECT logo FROM $TABLE_WARUNG WHERE idWarung = ?"
+        val cursor = db.rawQuery(query, arrayOf(idWarung))
+
+        cursor?.use {
+            if (it.moveToFirst()) {
+                imageData = it.getBlob(it.getColumnIndex("logo"))
+            }
+        }
+        return imageData
+    }
+
     fun getFilteredTransactions(selectedDate: Date, selectedShift: String): Cursor {
         val db = this.readableDatabase
 

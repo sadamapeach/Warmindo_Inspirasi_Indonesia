@@ -9,7 +9,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".CRUDRoleActivity">
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="18dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewRoles"
@@ -21,14 +23,16 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/item_role"/>
 
-        <Button
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="304dp"
-            android:layout_marginTop="540dp"
-            android:text="+"
-            app:layout_constraintStart_toStartOf="parent"
+            android:backgroundTint="@color/kuning"
+            android:clickable="true"
+            android:src="@drawable/add"
+            android:layout_marginTop="500dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

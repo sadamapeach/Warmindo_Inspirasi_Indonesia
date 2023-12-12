@@ -12,13 +12,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CrudRoleFragment : Fragment(), View.OnClickListener {
 
     private var idRole = ArrayList<String>()
     private var role = ArrayList<String>()
     private var status = ArrayList<String>()
-    private lateinit var btnAdd: Button
+    private lateinit var btnAdd: FloatingActionButton
     private lateinit var recyclerViewRoles: RecyclerView
     private lateinit var roleListAdapter: RoleListAdapter
     private var ADD_ROLE_REQUEST_CODE = 1
