@@ -44,7 +44,11 @@ class CrudPenggunaFragment : Fragment(), View.OnClickListener {
 
         storeDataInArrays()
 
-        customAdapter = CustomAdapter(requireContext(), idPengguna, namaPengguna, role, status, foto)
+        customAdapter = CustomAdapter(requireContext(), idPengguna, namaPengguna, role, status, foto,
+            onActivityResultCallback = { requestCode, resultCode ->
+                // Panggil metode untuk memperbarui data di sini
+                updateRecyclerView()
+            })
         recyclerView.adapter = customAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 

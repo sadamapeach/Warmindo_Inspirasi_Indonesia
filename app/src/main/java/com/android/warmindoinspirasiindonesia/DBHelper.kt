@@ -708,4 +708,10 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
 
         return db.rawQuery(query, null)
     }
+
+    fun getTransactionsByShift(shift: String): Cursor {
+        val db = this.readableDatabase
+        val query = "SELECT * FROM ${TABLE_TRANSAKSI} WHERE $KEY_TRANSAKSI_SHIFT = ?"
+        return db.rawQuery(query, arrayOf(shift))
+    }
 }

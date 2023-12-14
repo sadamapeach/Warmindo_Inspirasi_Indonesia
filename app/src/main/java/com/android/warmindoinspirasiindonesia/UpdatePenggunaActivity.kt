@@ -108,7 +108,15 @@ class UpdatePenggunaActivity : AppCompatActivity(), View.OnClickListener {
                 //val updatedFoto: ByteArray? = // Ambil data foto yang baru dari antarmuka, misalnya dengan metode getImageData()
 
                 DBHelper.updatePengguna(userId, updatedName, updatedStatus, idRole, safeThumbnail)
-                setResult(Activity.RESULT_OK)
+//                val resultIntent = Intent()
+//                setResult(Activity.RESULT_OK, resultIntent)
+
+                // Panggil fungsi callback di adapter
+//                (application as MyApplication).customAdapter.processActivityResult(
+//                    CustomAdapter.EDIT_PENGGUNA_REQUEST_CODE,
+//                    Activity.RESULT_OK,
+//                )
+
                 finish()
             }
         }

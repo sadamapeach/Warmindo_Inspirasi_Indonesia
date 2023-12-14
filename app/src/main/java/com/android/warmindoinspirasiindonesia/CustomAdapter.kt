@@ -3,6 +3,7 @@ package com.android.warmindoinspirasiindonesia
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
@@ -12,13 +13,14 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 
 class CustomAdapter(context: Context, idPengguna: ArrayList<String>,
                     namaPengguna: ArrayList<String>, role: ArrayList<String>,
-                    status: ArrayList<String>, foto: ArrayList<String>) :
-    RecyclerView.Adapter<CustomAdapter.MyViewHolder>() {
+                    status: ArrayList<String>, foto: ArrayList<String>,  private val onActivityResultCallback: (requestCode: Int, resultCode: Int) -> Unit) :
+    RecyclerView.Adapter<CustomAdapter.MyViewHolder>(), DataUpdateListener {
     companion object {
         const val EDIT_PENGGUNA_REQUEST_CODE = 1
     }
@@ -66,6 +68,42 @@ class CustomAdapter(context: Context, idPengguna: ArrayList<String>,
             holder.ivFoto.setImageBitmap(bitmap)
         } else {
             holder.ivFoto.setImageResource(R.drawable.profpic)
+        }
+    }
+
+    fun processActivityResult(requestCode: Int, resultCode: Int) {
+        onActivityResultCallback.invoke(requestCode, resultCode)
+    }
+
+    override fun onDataUpdated() {
+        updateRecyclerView()
+    }
+
+    private fun updateRecyclerView() {
+        idPengguna.clear()
+        namaPengguna.clear()
+        role.clear()
+        status.clear()
+        foto.clear()
+
+        storeDataInArrays()
+
+        notifyDataSetChanged()
+    }
+
+    private fun storeDataInArrays() {
+        val db = DBHelper(context)
+        val cursor: Cursor = db.getAllPengguna()
+
+        if (cursor.count == 0) {
+            Toast.makeText(context, "No data.", Toast.LENGTH_SHORT).show()
+        } else {
+            while (cursor.moveToNext()) {
+                idPengguna.add(cursor.getString(0))
+                namaPengguna.add(cursor.getString(3))
+                role.add(cursor.getString(7))
+                status.add(cursor.getString(4))
+            }
         }
     }
 
