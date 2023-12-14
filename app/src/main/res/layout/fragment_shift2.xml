@@ -13,6 +13,17 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="18dp">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOpenDatePicker2"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:text="Pilih Tanggal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewTransaksi2"
             android:layout_width="409dp"
@@ -20,8 +31,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/item_transaksi"/>
+            app:layout_constraintTop_toBottomOf="@+id/btnOpenDatePicker2"
+            tools:listitem="@layout/item_transaksi" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

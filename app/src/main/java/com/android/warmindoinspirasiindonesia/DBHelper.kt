@@ -714,4 +714,11 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         val query = "SELECT * FROM ${TABLE_TRANSAKSI} WHERE $KEY_TRANSAKSI_SHIFT = ?"
         return db.rawQuery(query, arrayOf(shift))
     }
+
+    fun getFilteredTransactions(selectedDate: String?, selectedShift: String): Cursor {
+        val db = this.readableDatabase
+        val query = "SELECT * FROM $TABLE_TRANSAKSI WHERE $KEY_TRANSAKSI_TANGGAL = ? AND $KEY_TRANSAKSI_SHIFT = ?"
+        return db.rawQuery(query, arrayOf(selectedDate, selectedShift))
+    }
+
 }
