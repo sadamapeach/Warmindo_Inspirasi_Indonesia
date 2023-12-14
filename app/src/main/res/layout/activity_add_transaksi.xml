@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 style="@style/Text_Login"
                 android:hint="ID Pengguna"
-                android:inputType="textPassword"
+                android:inputType="text"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
             <EditText

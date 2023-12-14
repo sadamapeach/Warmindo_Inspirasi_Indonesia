@@ -31,9 +31,6 @@ class EditRoleActivity : AppCompatActivity(), View.OnClickListener {
         btnSave = findViewById(R.id.btn_save)
         DBHelper = DBHelper(this)
 
-//        btnSave.setOnClickListener {
-//            saveRoleChanges()
-//        }
         btnSave.setOnClickListener(this)
 
         getAndSetIntentData()
@@ -51,15 +48,6 @@ class EditRoleActivity : AppCompatActivity(), View.OnClickListener {
         if (statusPosition != -1) {
             spinnerStatus.setSelection(statusPosition)
         }
-    }
-
-    private fun saveRoleChanges() {
-        val updatedRoleName = etRoleName.text.toString()
-        val updatedStatus = spinnerStatus.selectedItem.toString()
-
-        DBHelper.updateRole(roleId, updatedRoleName, updatedStatus)
-
-        finish()
     }
 
     private fun getAndSetIntentData() {

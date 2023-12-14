@@ -55,15 +55,6 @@ class CrudPenggunaFragment : Fragment(), View.OnClickListener {
         return view
     }
 
-//    override fun onClick(view: View?) {
-//        if (view != null) {
-//            if (view.id == R.id.btn_add) {
-//                val addPenggunaIntent = Intent(requireContext(), AddPenggunaActivity::class.java)
-//                startActivity(addPenggunaIntent)
-//            }
-//        }
-//    }
-
     override fun onClick(view: View?) {
         if (view != null) {
             if (view.id == R.id.btn_add) {

@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 class CustomAdapter(context: Context, idPengguna: ArrayList<String>,
                     namaPengguna: ArrayList<String>, role: ArrayList<String>,
                     status: ArrayList<String>, foto: ArrayList<String>,  private val onActivityResultCallback: (requestCode: Int, resultCode: Int) -> Unit) :
-    RecyclerView.Adapter<CustomAdapter.MyViewHolder>(), DataUpdateListener {
+    RecyclerView.Adapter<CustomAdapter.MyViewHolder>() {
     companion object {
         const val EDIT_PENGGUNA_REQUEST_CODE = 1
     }
@@ -41,7 +41,6 @@ class CustomAdapter(context: Context, idPengguna: ArrayList<String>,
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        //holder.tvIdPengguna.text = idPengguna[position]
         holder.tvNamaPengguna.text = namaPengguna[position]
         holder.tvRole.text = role[position]
         holder.tvStatus.text = status[position]
@@ -71,13 +70,6 @@ class CustomAdapter(context: Context, idPengguna: ArrayList<String>,
         }
     }
 
-    fun processActivityResult(requestCode: Int, resultCode: Int) {
-        onActivityResultCallback.invoke(requestCode, resultCode)
-    }
-
-    override fun onDataUpdated() {
-        updateRecyclerView()
-    }
 
     private fun updateRecyclerView() {
         idPengguna.clear()
@@ -125,7 +117,7 @@ class CustomAdapter(context: Context, idPengguna: ArrayList<String>,
         }
 
         builder.setNegativeButton("No") { _, _ ->
-            // Do nothing if "No" is clicked
+            // tidak melakukan apa2 jika No diklik
         }
 
         val dialog = builder.create()
@@ -137,7 +129,6 @@ class CustomAdapter(context: Context, idPengguna: ArrayList<String>,
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        //var tvIdPengguna: TextView = itemView.findViewById(R.id.tv_idPengguna)
         var tvNamaPengguna: TextView = itemView.findViewById(R.id.tv_namaPengguna)
         var tvRole: TextView = itemView.findViewById(R.id.tv_role)
         var tvStatus: TextView = itemView.findViewById(R.id.tv_status)

@@ -364,8 +364,6 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
 
         return userData
     }
-
-
     fun getAllFotoPengguna(userId: String): ByteArray? {
         val db = this.readableDatabase
         var imageData: ByteArray? = null
@@ -381,21 +379,6 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
         return imageData
     }
 
-//    fun getFotoPengguna(idPengguna: String): ByteArray? {
-//        val db = this.readableDatabase
-//        val query = "SELECT $KEY_PENGGUNA_FOTO FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_IDPENGGUNA = $idPengguna"
-//        val cursor: Cursor = db.rawQuery(query, null)
-//        var foto: ByteArray? = null
-//
-//        if (cursor.moveToFirst()) {
-//            foto = cursor.getBlob(cursor.getColumnIndex(KEY_PENGGUNA_FOTO))
-//        }
-//
-//        cursor.close()
-//        db.close()
-//
-//        return foto
-//    }
     fun getFotoPengguna(idPengguna: String): ByteArray? {
         val db = this.readableDatabase
         val query = "SELECT $KEY_PENGGUNA_FOTO FROM $TABLE_PENGGUNA WHERE $KEY_PENGGUNA_IDPENGGUNA = ?"
@@ -444,7 +427,6 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
             db.endTransaction()
         }
     }
-
 
     fun deletePengguna(id: String) {
         val db = this.writableDatabase
@@ -695,18 +677,6 @@ class DBHelper(private val context: Context) : SQLiteOpenHelper(context,DATABASE
             }
         }
         return imageData
-    }
-
-    fun getFilteredTransactions(selectedDate: Date, selectedShift: String): Cursor {
-        val db = this.readableDatabase
-
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val dateString = dateFormat.format(selectedDate)
-
-        val query = "SELECT * FROM $TABLE_TRANSAKSI " +
-                "WHERE $KEY_TRANSAKSI_TANGGAL = '$dateString' AND $KEY_TRANSAKSI_SHIFT = '$selectedShift'"
-
-        return db.rawQuery(query, null)
     }
 
     fun getTransactionsByShift(shift: String): Cursor {
